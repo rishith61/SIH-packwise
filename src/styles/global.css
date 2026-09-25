@@ -120,3 +120,24 @@ button, input, textarea { font: inherit; color: inherit; }
 [tabindex="-1"]:focus { outline: none; }
 
 .container { width: 100%; max-width: calc(var(--container) + 2 * var(--gutter)); margin: 0 auto; padding: 0 var(--gutter); }
+
+/* ---------- Print: the report's PDF fallback prints on a light palette ---------- */
+@media print {
+  :root, :root[data-theme] {
+    color-scheme: light;
+    --bg: #fff; --bg-alt: #fff; --surface: #fff; --surface-2: #f3efe8;
+    --text: #1f1f1a; --muted: #55554a;
+    --accent: #4a684a; --accent-tint: rgba(90, 122, 90, 0.10); --on-accent: #fff;
+    --border: #dcd4c6; --border-strong: #c7bca9;
+    --warn: #8a5f05; --danger: #b3432b; --focus: #4a684a;
+    --shadow-sm: none; --shadow-md: none;
+    --produce: #4a7c59; --produce-tint: rgba(74, 124, 89, 0.08);  --produce-line: rgba(74, 124, 89, 0.35);
+    --grains:  #9a6c08; --grains-tint:  rgba(184, 134, 11, 0.08); --grains-line:  rgba(184, 134, 11, 0.35);
+    --dairy:   #4a7fa5; --dairy-tint:   rgba(74, 127, 165, 0.08); --dairy-line:   rgba(74, 127, 165, 0.35);
+    --meat:    #c0533a; --meat-tint:    rgba(192, 83, 58, 0.08);  --meat-line:    rgba(192, 83, 58, 0.35);
+    --snacks:  #b0682a; --snacks-tint:  rgba(196, 122, 58, 0.08); --snacks-line:  rgba(196, 122, 58, 0.35);
+  }
+  body { background: #fff; }
+  [data-print="hide"] { display: none !important; }
+  section, tr { break-inside: avoid; }
+}

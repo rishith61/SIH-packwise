@@ -45,15 +45,17 @@ export function UnpackProvider({ children }) {
   return <UnpackContext.Provider value={value}>{children}</UnpackContext.Provider>;
 }
 
+/** Null outside the landing page (the wizard has no unpack animation). */
 export function useUnpack() {
   return useContext(UnpackContext);
 }
 
 /** Click handler for links that skip to the resolved category grid. */
 export function useJumpToGrid() {
-  const { jumpToGrid } = useUnpack();
+  const unpack = useUnpack();
   return useCallback((e) => {
+    if (!unpack) return;
     e.preventDefault();
-    jumpToGrid(true);
-  }, [jumpToGrid]);
+    unpack.jumpToGrid(true);
+  }, [unpack]);
 }

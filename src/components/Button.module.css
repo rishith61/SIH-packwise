@@ -12,3 +12,4 @@
 .ghost:hover { background: var(--surface-2); }
 .sm { min-height: 36px; padding: 0 var(--sp-4); font-size: 14px; }
 .block { width: 100%; }
+.btn:disabled { opacity: .5; cursor: not-allowed; }

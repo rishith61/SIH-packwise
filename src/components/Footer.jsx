@@ -3,7 +3,7 @@ import styles from './Footer.module.css';
 
 export default function Footer() {
   return (
-    <footer className={styles.footer}>
+    <footer className={styles.footer} data-print="hide">
       <div className={cx('container', styles.inner)}>
         <span>© 2026 PackWise</span>
         <span>Packaging recommendations for food makers</span>
