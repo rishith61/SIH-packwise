@@ -131,13 +131,19 @@ export function reducer(state, action) {
     }
 
     case 'commodity/custom': {
-      const fields = { ...EMPTY_PROFILE, category: action.category || '' };
-      const meta = action.category ? { category: { provenance: 'user-edited' } } : {};
+      // A matching hardcoded preset prefills the profile; otherwise it starts blank.
+      const profile = action.preset
+        ? profileFromPayload(action.preset)
+        : { fields: { ...EMPTY_PROFILE }, meta: {}, source: null };
+      if (action.category) {
+        profile.fields = { ...profile.fields, category: action.category };
+        profile.meta = { ...profile.meta, category: { provenance: 'user-edited' } };
+      }
       return {
         ...state,
         commodity: { commodityId: null, commodityName: action.name || '', isCustom: true },
         commodityLoad: initialState.commodityLoad,
-        profile: { fields, meta, source: null },
+        profile,
         notes: action.notes || null,
         analysis: initialState.analysis,
         fieldErrors: {},

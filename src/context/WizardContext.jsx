@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useRef } from 'react';
 import { analyze, getCommodity } from '../services/api';
+import { matchCustomPreset } from '../data/customPresets';
 import { buildAnalyzePayload, clearPersisted, loadPersisted, persist, reducer } from '../lib/wizardModel';
 
 const WizardContext = createContext(null);
@@ -41,7 +42,8 @@ export function WizardProvider({ children }) {
 
   const startCustom = useCallback(({ name, category, notes }) => {
     commodityCtrl.current?.abort();
-    dispatch({ type: 'commodity/custom', name, category, notes });
+    const preset = matchCustomPreset(name, notes?.description);
+    dispatch({ type: 'commodity/custom', name, category, notes, preset });
   }, []);
 
   /** Sends POST /api/analyze with the current wizard state. */

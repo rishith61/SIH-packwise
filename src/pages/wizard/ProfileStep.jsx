@@ -103,7 +103,9 @@ function ProfileForm() {
         Food profile{commodity.commodityName && !commodity.isCustom ? `: ${commodity.commodityName}` : ''}
       </h1>
       <p className={styles.sub}>
-        {commodity.isCustom
+        {commodity.isCustom && source
+          ? 'Prefilled with example values for this food. They are estimates, so edit anything you know differs for your product.'
+          : commodity.isCustom
           ? "Enter what you know about this food's properties. Leave a field empty if you're unsure. You can still continue, and the result will be flagged as lower confidence."
           : 'Typical values for this food. Edit anything that differs for your product; edited values are labelled so the result stays traceable.'}
       </p>
