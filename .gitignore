@@ -54,3 +54,11 @@ venv/
 backend/*.db
 backend/*.db-journal
 backend/artifacts/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+backend/*.sqlite3
+
+# Local tool settings
+.claude/
