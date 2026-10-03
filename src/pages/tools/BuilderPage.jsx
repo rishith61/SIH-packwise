@@ -4,7 +4,8 @@ import { useWizard } from '../../context/WizardContext';
 import { evaluate, listMaterials, listStructures, searchCommodities } from '../../services/api';
 import { useQuery } from '../../hooks/useQuery';
 import { useFocusOnMount } from '../../hooks/useFocusOnMount';
-import { initialScenario, toRequest, wizardScenario } from '../../lib/scenario';
+import { initialScenario, scenarioRule, storageProblem, toRequest, wizardScenario } from '../../lib/scenario';
+import { useStorageRules } from '../../hooks/useStorageRules';
 import { dayRange, days, inr, label, num } from '../../utils/format';
 import Button from '../../components/Button';
 import Notice from '../../components/wizard/Notice';
@@ -153,7 +154,9 @@ export default function BuilderPage() {
     setStack(stackFrom(pick));
   }, [library, wanted]);
 
-  const request = toRequest(scenario);
+  const rule = scenarioRule(useStorageRules(), scenario);
+  const unsupported = storageProblem(rule, scenario.conditions);
+  const request = toRequest(scenario, scenario.conditions, rule);
   const structure = stack && structurePayload(stack);
   const payload = request && structure ? { scenario: request, structure } : null;
   const result = useQuery((signal) => evaluate(payload, { signal }), payload ? JSON.stringify(payload) : null, { delay: 350 });
@@ -207,15 +210,20 @@ export default function BuilderPage() {
             <h2 className={styles.panelTitle} id="scn-title">Food and conditions</h2>
             <p className={styles.panelSub}>{scenario.commodityKey === '__analysis__' ? 'From your analysis. Changes here stay in the Builder.' : 'Pick a food and set where it will be stored.'}</p>
             <div className={styles.gap}>
-              <ScenarioEditor idPrefix="bld" scenario={scenario} onChange={setScenario} catalog={catalog.data?.results} fromAnalysis={fromAnalysis} />
+              <ScenarioEditor idPrefix="bld" scenario={scenario} onChange={setScenario} catalog={catalog.data?.results} fromAnalysis={fromAnalysis} rule={rule} />
             </div>
           </section>
         </div>
 
         <div>
           <p className={styles.status} role="status" aria-live="polite">
-            {result.status === 'loading' && payload ? 'Evaluating…' : !payload && ready ? 'Fix the highlighted values to evaluate.' : ''}
+            {result.status === 'loading' && payload ? 'Evaluating…' : !payload && ready && !unsupported ? 'Fix the highlighted values to evaluate.' : ''}
           </p>
+          {unsupported && (
+            <Notice tone="warn" title="These conditions aren't supported for this food">
+              {unsupported} Change the storage under Food and conditions to evaluate a package.
+            </Notice>
+          )}
           {result.status === 'error' && (
             <Notice tone={result.error?.code === 'NOT_AVAILABLE' ? 'info' : 'danger'} title={result.error?.code === 'NOT_AVAILABLE' ? 'Needs the backend' : "Couldn't evaluate this package"}
               actions={result.error?.code !== 'NOT_AVAILABLE' && <Button size="sm" variant="ghost" onClick={result.retry}>Try again</Button>}>
@@ -223,7 +231,7 @@ export default function BuilderPage() {
             </Notice>
           )}
           {!result.data && result.status === 'loading' && <div className={styles.panel}><Skeleton height={260} /></div>}
-          {result.data && (
+          {result.data && payload && (
             <div className={result.status === 'loading' ? styles.busy : undefined}>
               <Indicators data={result.data} />
               <section className={`${styles.panel} ${styles.gap}`} aria-labelledby="breq-title">

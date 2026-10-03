@@ -9,6 +9,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any
 
+from . import storage
 from .types import PROV_PROTO, PROV_USER, CommodityRecord, Param
 
 PROFILE_KEYS = ("moisturePct", "fatPct", "ph", "respirationClass", "oxidationSensitivity")
@@ -143,6 +144,12 @@ def build_scenario(req, record: CommodityRecord | None, defaults: dict) -> Scena
         category = "fresh_produce" if resp_in in ("low", "medium", "high") else "other"
         reasons.append("Category was not given and was inferred from the respiration class.")
 
+    name = (req.commodity.commodity_name or (record.name if record else "Custom food")).strip() or "Custom food"
+    issue = storage.problem(storage.rule(category, record, defaults, name), name,
+                            req.conditions.storage_type, req.conditions.temperature_c)
+    if issue:
+        raise ScenarioError(*issue)
+
     requested = {
         "moisturePct": p.moisture_pct, "fatPct": p.fat_pct, "ph": p.ph,
         "respirationClass": resp_in, "oxidationSensitivity": p.oxidation_sensitivity,
@@ -231,7 +238,7 @@ def build_scenario(req, record: CommodityRecord | None, defaults: dict) -> Scena
     pr = req.priorities
     return Scenario(
         commodity_id=record.id if record else None,
-        name=(req.commodity.commodity_name or (record.name if record else "Custom food")).strip() or "Custom food",
+        name=name,
         is_custom=is_custom,
         category=category,
         profile=profile,

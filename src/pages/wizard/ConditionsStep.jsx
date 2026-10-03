@@ -4,6 +4,7 @@ import { useWizard } from '../../context/WizardContext';
 import { useAnnounce } from '../../context/AnnouncerContext';
 import { CONDITION_FIELDS, STORAGE_TYPES, TRANSPORT_MODES, TRANSPORT_STRESS } from '../../data/wizard';
 import { validateConditions } from '../../lib/wizardModel';
+import { storageErrors, storageHint } from '../../lib/storage';
 import { useFocusOnMount } from '../../hooks/useFocusOnMount';
 import ThermometerIcon from '../../components/icons/ThermometerIcon';
 import TruckIcon from '../../components/icons/TruckIcon';
@@ -16,15 +17,17 @@ import styles from './Wizard.module.css';
 const FIELD_ORDER = ['storageType', 'temperatureC', 'relativeHumidityPct', 'targetShelfLifeDays', 'transportMode', 'transportStress'];
 
 export default function ConditionsStep() {
-  const { state, dispatch } = useWizard();
+  const { state, dispatch, storageRule } = useWizard();
   const navigate = useNavigate();
   const announce = useAnnounce();
   const headingRef = useFocusOnMount();
   const [attempted, setAttempted] = useState(false);
 
   const c = state.conditions;
-  const clientErrors = validateConditions(c);
-  const errorFor = (key) => state.fieldErrors['conditions.' + key] || (attempted ? clientErrors[key] : null);
+  const clientErrors = validateConditions(c, storageRule);
+  // Unsupported storage for this food is explained straight away; other checks wait for "Next".
+  const storageProblem = storageErrors(storageRule, c);
+  const errorFor = (key) => state.fieldErrors['conditions.' + key] || storageProblem[key] || (attempted ? clientErrors[key] : null);
   const set = (field) => (value) => dispatch({ type: 'conditions/set', field, value });
   const num = (key) => {
     const f = CONDITION_FIELDS[key];
@@ -68,9 +71,10 @@ export default function ConditionsStep() {
               options={STORAGE_TYPES}
               value={c.storageType}
               onChange={set('storageType')}
+              hint={storageHint(storageRule)}
               error={errorFor('storageType')}
             />
-            <NumberField {...num('temperatureC')} placeholder="e.g. 6" />
+            <NumberField {...num('temperatureC')} placeholder="e.g. 12" />
             <NumberField {...num('targetShelfLifeDays')} placeholder="e.g. 20" />
             <RangeField {...num('relativeHumidityPct')} className={styles.span2} />
           </div>

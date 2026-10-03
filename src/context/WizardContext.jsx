@@ -2,6 +2,8 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useReducer,
 import { analyze, getCommodity } from '../services/api';
 import { matchCustomPreset } from '../data/customPresets';
 import { buildAnalyzePayload, clearPersisted, loadPersisted, persist, reducer } from '../lib/wizardModel';
+import { storageRuleFor } from '../lib/storage';
+import { useStorageRules } from '../hooks/useStorageRules';
 
 const WizardContext = createContext(null);
 
@@ -74,9 +76,18 @@ export function WizardProvider({ children }) {
     dispatch({ type: 'reset' });
   }, []);
 
+  // The selected food's storage rule (allowed storage types, lowest safe temperature); null until loaded.
+  const rules = useStorageRules();
+  const { commodityId, commodityName } = state.commodity;
+  const category = state.profile.fields.category;
+  const storageRule = useMemo(
+    () => storageRuleFor(rules, { commodityId, name: commodityName, category }),
+    [rules, commodityId, commodityName, category],
+  );
+
   const value = useMemo(
-    () => ({ state, dispatch, loadCommodity, startCustom, runAnalysis, reset }),
-    [state, loadCommodity, startCustom, runAnalysis, reset],
+    () => ({ state, dispatch, loadCommodity, startCustom, runAnalysis, reset, storageRule }),
+    [state, loadCommodity, startCustom, runAnalysis, reset, storageRule],
   );
 
   return <WizardContext.Provider value={value}>{children}</WizardContext.Provider>;

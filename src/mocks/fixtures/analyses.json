@@ -12,7 +12,7 @@
   "requirements": [
    {
     "label": "OTR target",
-    "value": "Controlled gas exchange: O₂ 3–5 % at 6 °C, never below 5.5 %",
+    "value": "Controlled gas exchange: O₂ 3–5 % at 12 °C, never below 5.5 %",
     "status": "PASS",
     "provenance": "source-backed"
    },
@@ -54,23 +54,22 @@
    }
   ],
   "why": [
-   "High respiration (about 8 mL O₂/kg·h at 6 °C) means the 1000 g pack must let in roughly 1,300 mL O₂ a day, so gas exchange has to be engineered rather than blocked.",
+   "High respiration (about 14 mL O₂/kg·h at 12 °C) means the 1000 g pack must let in roughly 2,200 mL O₂ a day, so gas exchange has to be engineered rather than blocked.",
    "The target atmosphere (O₂ 3–5 %, CO₂ 2–3 %) is the published recommendation for tomato.",
    "85 % RH with cold-chain temperature swings risks condensation, so the inner surface must be anti-fog.",
-   "Tomato is chilling-sensitive below 10 °C. Packaging can't prevent chilling injury, so storing at 10–13 °C is safer.",
    "Medium transport stress allows at most 60 Gelbo flex pinholes, which rules out the more crack-prone barrier laminates.",
-   "No candidate met every constraint and your 20-day target, so LDPE bag with macro-perforations (40 µm) is the closest option (estimated 12–23 days). Review the flagged requirements."
+   "No candidate met every constraint and your 20-day target, so LDPE bag with macro-perforations (40 µm) is the closest option (estimated 11–20 days). Review the flagged requirements."
   ],
   "alternatives": [
    {
     "structure": "Unperforated LDPE bag (30 µm)",
     "structureId": "PLAIN_LDPE",
     "profile": "Lowest cost",
-    "tradeoffSummary": "Lowest cost: ≈42 % lower cost (₹0.53 vs ₹0.91 per pack); below your 20-day target (estimated 3.7 days, limited by CO₂ injury); lower footprint (7 vs 9 g CO₂e); needs review on otr target, thickness, mechanical protection.",
+    "tradeoffSummary": "Lowest cost: ≈42 % lower cost (₹0.53 vs ₹0.91 per pack); below your 20-day target (estimated 3.2 days, limited by CO₂ injury); lower footprint (7 vs 9 g CO₂e); needs review on otr target, thickness, mechanical protection.",
     "requirements": [
      {
       "label": "OTR target",
-      "value": "Controlled gas exchange: O₂ 3–5 % at 6 °C, never below 5.5 %",
+      "value": "Controlled gas exchange: O₂ 3–5 % at 12 °C, never below 5.5 %",
       "status": "REVIEW",
       "provenance": "source-backed"
      },
@@ -112,13 +111,13 @@
      }
     ],
     "shelfLife": {
-     "estimateDays": 3.7,
-     "lowDays": 2.6,
-     "highDays": 4.8,
+     "estimateDays": 3.2,
+     "lowDays": 2.2,
+     "highDays": 4.1,
      "failureMode": "CO₂ injury",
      "mechanisms": {
-      "CO₂ injury": 3.7,
-      "dehydration (weight loss)": 3650.0
+      "CO₂ injury": 3.2,
+      "dehydration (weight loss)": 2066.0
      },
      "provenance": "prototype estimate",
      "targetDays": 20,
@@ -142,11 +141,11 @@
     "structure": "Micro-perforated anti-fog BOPP (25 µm)",
     "structureId": "MP_ANTIFOG_BOPP",
     "profile": "Lowest footprint",
-    "tradeoffSummary": "Lowest footprint: ≈10 % lower cost (₹0.82 vs ₹0.91 per pack); below your 20-day target (estimated 13 days, limited by CO₂ injury); lower footprint (6 vs 9 g CO₂e); needs review on otr target, map.",
+    "tradeoffSummary": "Lowest footprint: ≈10 % lower cost (₹0.82 vs ₹0.91 per pack); below your 20-day target (estimated 11 days, limited by CO₂ injury); lower footprint (6 vs 9 g CO₂e); needs review on otr target, map.",
     "requirements": [
      {
       "label": "OTR target",
-      "value": "Controlled gas exchange: O₂ 3–5 % at 6 °C, never below 5.5 %",
+      "value": "Controlled gas exchange: O₂ 3–5 % at 12 °C, never below 5.5 %",
       "status": "REVIEW",
       "provenance": "source-backed"
      },
@@ -188,12 +187,12 @@
      }
     ],
     "shelfLife": {
-     "estimateDays": 13.0,
-     "lowDays": 8.9,
-     "highDays": 16.0,
+     "estimateDays": 11.0,
+     "lowDays": 7.6,
+     "highDays": 14.0,
      "failureMode": "CO₂ injury",
      "mechanisms": {
-      "CO₂ injury": 13.0,
+      "CO₂ injury": 11.0,
       "dehydration (weight loss)": 3650.0
      },
      "provenance": "prototype estimate",
@@ -218,11 +217,11 @@
     "structure": "Micro-perforated anti-fog LDPE (30 µm)",
     "structureId": "MP_ANTIFOG_LDPE",
     "profile": "Balanced alternative",
-    "tradeoffSummary": "Balanced alternative: ≈8 % lower cost (₹0.84 vs ₹0.91 per pack); below your 20-day target (estimated 13 days, limited by CO₂ injury); lower footprint (7 vs 9 g CO₂e); needs review on otr target, map.",
+    "tradeoffSummary": "Balanced alternative: ≈8 % lower cost (₹0.84 vs ₹0.91 per pack); below your 20-day target (estimated 11 days, limited by CO₂ injury); lower footprint (7 vs 9 g CO₂e); needs review on otr target, map.",
     "requirements": [
      {
       "label": "OTR target",
-      "value": "Controlled gas exchange: O₂ 3–5 % at 6 °C, never below 5.5 %",
+      "value": "Controlled gas exchange: O₂ 3–5 % at 12 °C, never below 5.5 %",
       "status": "REVIEW",
       "provenance": "source-backed"
      },
@@ -264,13 +263,13 @@
      }
     ],
     "shelfLife": {
-     "estimateDays": 13.0,
-     "lowDays": 8.9,
-     "highDays": 16.0,
+     "estimateDays": 11.0,
+     "lowDays": 7.6,
+     "highDays": 14.0,
      "failureMode": "CO₂ injury",
      "mechanisms": {
-      "CO₂ injury": 13.0,
-      "dehydration (weight loss)": 3650.0
+      "CO₂ injury": 11.0,
+      "dehydration (weight loss)": 1718.0
      },
      "provenance": "prototype estimate",
      "targetDays": 20,
@@ -295,8 +294,8 @@
    "gasExchangeRequirement": "Controlled (breathable film)",
    "mapSuitable": false,
    "respirationRate": {
-    "mlO2PerKgH": 8.3,
-    "temperatureC": 6.0,
+    "mlO2PerKgH": 14.4,
+    "temperatureC": 12.0,
     "provenance": "prototype estimate"
    },
    "perforation": {
@@ -308,10 +307,10 @@
     "provenance": "prototype estimate"
    },
    "equilibrium": {
-    "o2Pct": 20.7,
-    "co2Pct": 0.3,
-    "o2PctWorstCase": 20.6,
-    "worstCaseTempC": 10.0,
+    "o2Pct": 20.6,
+    "co2Pct": 0.4,
+    "o2PctWorstCase": 20.4,
+    "worstCaseTempC": 16.0,
     "provenance": "rule-derived",
     "note": "Steady-state estimate; verify with headspace gas analysis."
    },
@@ -336,16 +335,7 @@
     "severity": 0.9,
     "drivers": [
      "high respiration class",
-     "6 °C storage"
-    ]
-   },
-   {
-    "code": "CHILLING_INJURY",
-    "title": "Chilling injury",
-    "level": "medium",
-    "severity": 0.6,
-    "drivers": [
-     "6 °C is below the 10 °C chilling threshold"
+     "12 °C storage"
     ]
    },
    {
@@ -382,12 +372,12 @@
    "otr": {
     "targetMax": null,
     "candidate": 5200.0,
-    "atStorage": 1900.0,
+    "atStorage": 2700.0,
     "unit": "cc/m²·day·atm",
     "testConditions": "23 °C, 0 % RH (ASTM D3985)"
    },
    "wvtr": {
-    "targetMax": 5608.562,
+    "targetMax": 2598.021,
     "candidate": 22.0,
     "unit": "g/m²·day",
     "testConditions": "38 °C, 90 % RH (ASTM F1249)"
@@ -428,22 +418,22 @@
     "eprCategory": "II"
    },
    "gasBalance": {
-    "o2Pct": 20.7,
-    "co2Pct": 0.3,
-    "o2PctWorstCase": 20.6,
-    "worstCaseTempC": 10.0,
+    "o2Pct": 20.6,
+    "co2Pct": 0.4,
+    "o2PctWorstCase": 20.4,
+    "worstCaseTempC": 16.0,
     "provenance": "rule-derived",
     "note": "Steady-state estimate; verify with headspace gas analysis."
    }
   },
   "shelfLife": {
-   "estimateDays": 18.0,
-   "lowDays": 12.0,
-   "highDays": 23.0,
+   "estimateDays": 15.0,
+   "lowDays": 11.0,
+   "highDays": 20.0,
    "failureMode": "senescence and ripening",
    "mechanisms": {
-    "senescence and ripening": 18.0,
-    "dehydration (weight loss)": 379.0
+    "senescence and ripening": 15.0,
+    "dehydration (weight loss)": 241.0
    },
    "provenance": "prototype estimate",
    "targetDays": 20,
@@ -467,7 +457,7 @@
     "structureId": "MP_PBS_PHA",
     "stage": "performance",
     "reasons": [
-     "Estimated shelf life 13 days (CO₂ injury) is below your 20-day target."
+     "Estimated shelf life 11 days (CO₂ injury) is below your 20-day target."
     ]
    },
    {
@@ -475,7 +465,7 @@
     "structureId": "MP_PLA",
     "stage": "performance",
     "reasons": [
-     "Estimated shelf life 13 days (CO₂ injury) is below your 20-day target."
+     "Estimated shelf life 11 days (CO₂ injury) is below your 20-day target."
     ]
    },
    {
@@ -483,7 +473,7 @@
     "structureId": "PLAIN_ANTIFOG_BOPP",
     "stage": "performance",
     "reasons": [
-     "Estimated shelf life 3.7 days (CO₂ injury) is below your 20-day target."
+     "Estimated shelf life 3.2 days (CO₂ injury) is below your 20-day target."
     ]
    },
    {
@@ -630,7 +620,7 @@
   ],
   "assumptions": [
    "Pack format assumed: 1 kg retail bag (1000 g, 0.12 m² film area).",
-   "Transit excursion to 10 °C checked for produce gas balance.",
+   "Transit excursion to 16 °C checked for produce gas balance.",
    "Shelf-life, cost and footprint figures are prototype estimates (±30 % band) pending laboratory validation."
   ],
   "inputsUsed": {
@@ -709,7 +699,7 @@
     "provenance": "prototype estimate"
    },
    "conditions": {
-    "temperatureC": 6.0,
+    "temperatureC": 12.0,
     "relativeHumidityPct": 85.0,
     "storageType": "chilled",
     "targetShelfLifeDays": 20,
@@ -731,7 +721,7 @@
    },
    {
     "stage": "risks",
-    "detail": "5 risks assessed; highest: respiration and headspace anoxia (high)"
+    "detail": "4 risks assessed; highest: respiration and headspace anoxia (high)"
    },
    {
     "stage": "requirements",
@@ -747,7 +737,7 @@
    },
    {
     "stage": "explain",
-    "detail": "6 reasons and 3 alternatives prepared"
+    "detail": "5 reasons and 3 alternatives prepared"
    }
   ]
  },
@@ -2091,6 +2081,14 @@
     },
     "mapProfile": {
      "value": "dairy_fresh",
+     "provenance": "prototype estimate",
+     "confidence": "prototype"
+    },
+    "allowedStorage": {
+     "value": [
+      "chilled",
+      "frozen"
+     ],
      "provenance": "prototype estimate",
      "confidence": "prototype"
     }

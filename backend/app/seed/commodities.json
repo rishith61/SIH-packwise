@@ -154,7 +154,8 @@
         "respirationClass": { "value": "none", "provenance": "source-backed", "confidence": "medium", "sourceId": "BLUEPRINT_MATRIX" },
         "oxidationSensitivity": "medium",
         "microbialShelfLifeDays": [6, 4],
-        "mapProfile": "dairy_fresh"
+        "mapProfile": "dairy_fresh",
+        "allowedStorage": { "value": ["chilled", "frozen"], "provenance": "prototype estimate", "confidence": "prototype", "_todo": "Verify: fresh paneer assumed unsafe at ambient; freezing is done commercially." }
       }
     },
     {

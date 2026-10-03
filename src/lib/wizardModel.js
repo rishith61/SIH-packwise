@@ -4,6 +4,7 @@
  * backend's job (build spec §10).
  */
 import { CONDITION_FIELDS, PROFILE_FIELDS } from '../data/wizard';
+import { storageErrors } from './storage';
 
 export const PROFILE_KEYS = ['category', 'moisturePct', 'fatPct', 'ph', 'respirationClass', 'oxidationSensitivity'];
 const NUMERIC_PROFILE_KEYS = ['moisturePct', 'fatPct', 'ph'];
@@ -255,14 +256,15 @@ export function validateProfile(state) {
   return errors;
 }
 
-export function validateConditions(conditions) {
-  const errors = {};
+/** Range checks, plus the food's storage rule (see lib/storage.js) when one is given. */
+export function validateConditions(conditions, storageRule = null) {
+  const errors = { ...storageErrors(storageRule, conditions) };
   for (const key of ['storageType', 'transportMode', 'transportStress']) {
     if (!conditions[key]) errors[key] = 'Choose an option';
   }
   for (const key of NUMERIC_CONDITION_KEYS) {
     const msg = checkNumber(conditions[key], CONDITION_FIELDS[key], { required: true, integer: key === 'targetShelfLifeDays' });
-    if (msg) errors[key] = msg;
+    if (msg) errors[key] = errors[key] || msg;
   }
   return errors;
 }
@@ -273,11 +275,11 @@ export function hasCommodity(state) {
   return state.commodity.isCustom || Boolean(state.commodity.commodityId);
 }
 
-/** Which wizard steps are complete, in order. */
-export function stepCompletion(state) {
+/** Which wizard steps are complete, in order. Pass the food's storage rule to hold back unsupported storage. */
+export function stepCompletion(state, storageRule = null) {
   const commodity = hasCommodity(state);
   const profile = commodity && Object.keys(validateProfile(state)).length === 0;
-  const conditions = profile && Object.keys(validateConditions(state.conditions)).length === 0;
+  const conditions = profile && Object.keys(validateConditions(state.conditions, storageRule)).length === 0;
   return { commodity, profile, conditions, priorities: conditions, result: Boolean(state.analysis.result) };
 }
 

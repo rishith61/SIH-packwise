@@ -18,11 +18,11 @@ function stepIndexFor(pathname) {
 }
 
 export default function WizardLayout() {
-  const { state } = useWizard();
+  const { state, storageRule } = useWizard();
   const { pathname } = useLocation();
   const current = stepIndexFor(pathname);
 
-  const done = stepCompletion(state);
+  const done = stepCompletion(state, storageRule);
   // Priorities always validate, so they only count as complete once an analysis has been run.
   const doneList = [done.commodity, done.profile, done.conditions, done.priorities && done.result, done.result];
   const loadingCommodity = state.commodityLoad.status !== 'idle';

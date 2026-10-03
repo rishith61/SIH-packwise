@@ -128,3 +128,41 @@ def test_what_if_reports_direction_of_change(client):
     shelf = next(c for c in body["changes"] if c["indicator"].startswith("Estimated shelf life"))
     assert shelf["after"] < shelf["before"] and shelf["direction"] == "worse"
     assert "variantRecommendation" in body
+
+
+def test_storage_rules_cover_catalog_and_categories(client):
+    rules = client.get("/api/storage-rules").json()
+    tomato = rules["commodities"]["TOMATO_GENERIC"]
+    assert "frozen" not in tomato["allowedStorage"] and tomato["minTemperatureC"] == 10
+    assert "{name}" in rules["categories"]["fresh_produce"]["messages"]["frozen"]
+
+
+@pytest.mark.parametrize("conditions, field, phrase", [
+    ({"temperatureC": 6}, "conditions.temperatureC", "chilling injury"),
+    ({"storageType": "frozen", "temperatureC": -18}, "conditions.storageType", "Frozen storage isn't supported"),
+])
+def test_impossible_storage_is_rejected(client, conditions, field, phrase):
+    r = client.post("/api/analyze", json=scenario(**conditions))
+    assert r.status_code == 422
+    assert r.json()["error"]["field"] == field and phrase in r.json()["error"]["message"]
+
+
+def test_raw_meat_cannot_be_stored_ambient(client):
+    r = client.post("/api/analyze", json=scenario("CHICKEN_FRESH", None, storageType="ambient", temperatureC=25,
+                                                  transportMode="ambient_transport"))
+    assert r.status_code == 422 and r.json()["error"]["field"] == "conditions.storageType"
+
+
+def test_custom_produce_uses_category_rule(client):
+    body = scenario(None, "Okra", storageType="frozen", temperatureC=-18, transportMode="frozen_transport")
+    body["commodity"].update(isCustom=True, profile={"category": "fresh_produce", "respirationClass": "medium"})
+    r = client.post("/api/analyze", json=body)
+    assert r.status_code == 422 and "Okra" in r.json()["error"]["message"]
+
+
+def test_builder_and_what_if_apply_the_same_rules(client):
+    frozen = scenario(storageType="frozen", temperatureC=-18)
+    r = client.post("/api/evaluate", json={"scenario": frozen, "structure": {"structureId": "MACRO_LDPE"}})
+    assert r.status_code == 422
+    r = client.post("/api/what-if", json={"baseline": {"scenario": scenario()}, "variant": {"scenario": frozen}})
+    assert r.status_code == 422

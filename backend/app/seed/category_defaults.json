@@ -6,7 +6,14 @@
       "awInitial": 0.98,
       "allowedMoistureLossPct": 5,
       "mapProfile": "emap",
-      "mechanicalScale": 0.35
+      "mechanicalScale": 0.35,
+      "storage": {
+        "_todo": "Verify: assumes fresh produce is never frozen as-is (frozen vegetables are blanched first). Prototype rule, not source-backed.",
+        "allowed": ["chilled", "ambient"],
+        "messages": {
+          "frozen": "Frozen storage isn't supported for {name}: freezing ruptures the cells of fresh produce. Frozen vegetables are blanched first, which makes them a different product."
+        }
+      }
     },
     "dry_goods": {
       "pack": { "netWeightG": 1000, "areaM2": 0.10, "format": "1 kg pouch" },
@@ -31,7 +38,13 @@
       "allowedMoistureLossPct": 2,
       "microbialShelfLifeDays": [7, 4],
       "mapProfile": "dairy_fresh",
-      "mechanicalScale": 1.0
+      "mechanicalScale": 1.0,
+      "storage": {
+        "_todo": "Dairy covers shelf-stable foods (milk powder) too, so every storage type stays allowed here; fresh dairy restricts itself with an allowedStorage param.",
+        "messages": {
+          "ambient": "{name} is a perishable fresh dairy food and isn't safe stored at ambient temperature. Choose chilled or frozen storage."
+        }
+      }
     },
     "meat_seafood": {
       "pack": { "netWeightG": 500, "areaM2": 0.08, "format": "500 g pouch / tray lid" },
@@ -39,7 +52,14 @@
       "allowedMoistureLossPct": 2,
       "microbialShelfLifeDays": [5, 4],
       "mapProfile": "poultry",
-      "mechanicalScale": 1.0
+      "mechanicalScale": 1.0,
+      "storage": {
+        "_todo": "Verify: assumes raw meat and seafood are always kept cold (food-safety practice). Prototype rule, not source-backed.",
+        "allowed": ["chilled", "frozen"],
+        "messages": {
+          "ambient": "Raw meat and seafood such as {name} aren't safe stored at ambient temperature. Choose chilled or frozen storage."
+        }
+      }
     },
     "other": {
       "pack": { "netWeightG": 500, "areaM2": 0.08, "format": "500 g pouch" },

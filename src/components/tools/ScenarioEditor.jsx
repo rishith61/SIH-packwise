@@ -1,13 +1,14 @@
 import { CONDITION_FIELDS, STORAGE_TYPES, TRANSPORT_MODES, TRANSPORT_STRESS } from '../../data/wizard';
 import { FROM_ANALYSIS, catalogScenario, conditionErrors } from '../../lib/scenario';
+import { storageHint } from '../../lib/storage';
 import styles from '../../pages/tools/Tools.module.css';
 
 const SELECTS = { storageType: STORAGE_TYPES, transportMode: TRANSPORT_MODES, transportStress: TRANSPORT_STRESS };
 const ORDER = ['storageType', 'temperatureC', 'relativeHumidityPct', 'targetShelfLifeDays', 'transportMode', 'transportStress'];
 
 /** Storage and transport condition inputs (strings while editing). */
-export function ConditionFields({ idPrefix, conditions, onChange, compareTo }) {
-  const errors = conditionErrors(conditions);
+export function ConditionFields({ idPrefix, conditions, onChange, compareTo, rule }) {
+  const errors = conditionErrors(conditions, rule);
   const set = (key, value) => onChange({ ...conditions, [key]: value });
   return (
     <div className={styles.fieldGrid}>
@@ -36,7 +37,7 @@ export function ConditionFields({ idPrefix, conditions, onChange, compareTo }) {
 }
 
 /** Food choice (catalog or the wizard's own) plus conditions. */
-export default function ScenarioEditor({ idPrefix = 'scn', scenario, onChange, catalog, fromAnalysis }) {
+export default function ScenarioEditor({ idPrefix = 'scn', scenario, onChange, catalog, fromAnalysis, rule }) {
   function pickFood(key) {
     if (key === FROM_ANALYSIS && fromAnalysis) {
       onChange({ ...fromAnalysis, conditions: scenario.conditions });
@@ -60,9 +61,11 @@ export default function ScenarioEditor({ idPrefix = 'scn', scenario, onChange, c
           )}
           {catalog?.map((c) => <option key={c.commodityId} value={c.commodityId}>{c.name}</option>)}
         </select>
+        {storageHint(rule) && <span className={styles.hint}>{storageHint(rule)}</span>}
       </label>
       <div className={styles.wide}>
-        <ConditionFields idPrefix={idPrefix} conditions={scenario.conditions} onChange={(conditions) => onChange({ ...scenario, conditions })} />
+        <ConditionFields idPrefix={idPrefix} conditions={scenario.conditions} rule={rule}
+          onChange={(conditions) => onChange({ ...scenario, conditions })} />
       </div>
     </div>
   );

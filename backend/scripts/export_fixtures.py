@@ -27,7 +27,7 @@ PRIORITIES = {"shelfLife": 0.8, "cost": 0.4, "sustainability": 0.7, "mechanicalS
 
 # One demo analysis per mock branch (fresh produce, dry/snack, everything else), as in build spec §9.
 ANALYSES = {
-    "fresh_produce": ("TOMATO_GENERIC", {"storageType": "chilled", "temperatureC": 6, "relativeHumidityPct": 85,
+    "fresh_produce": ("TOMATO_GENERIC", {"storageType": "chilled", "temperatureC": 12, "relativeHumidityPct": 85,
                                          "targetShelfLifeDays": 20, "transportMode": "refrigerated_transport", "transportStress": "medium"}),
     "dry": ("POTATO_CHIPS", {"storageType": "ambient", "temperatureC": 30, "relativeHumidityPct": 75,
                              "targetShelfLifeDays": 120, "transportMode": "ambient_transport", "transportStress": "high"}),
@@ -52,6 +52,7 @@ def main() -> None:
     with TestClient(app) as c:
         index = ok(c.get("/api/commodities", params={"query": ""}))["results"]
         write("commodities.json", [ok(c.get(f"/api/commodities/{x['commodityId']}")) for x in index])
+        write("storage_rules.json", ok(c.get("/api/storage-rules")))
 
         analyses = {}
         for key, (commodity_id, conditions) in ANALYSES.items():

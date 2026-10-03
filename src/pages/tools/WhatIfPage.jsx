@@ -4,7 +4,8 @@ import { listStructures, searchCommodities, whatIf } from '../../services/api';
 import { useQuery } from '../../hooks/useQuery';
 import { useFocusOnMount } from '../../hooks/useFocusOnMount';
 import { CONDITION_FIELDS } from '../../data/wizard';
-import { FROM_ANALYSIS, initialScenario, toRequest, wizardScenario } from '../../lib/scenario';
+import { FROM_ANALYSIS, initialScenario, scenarioRule, storageProblem, toRequest, wizardScenario } from '../../lib/scenario';
+import { useStorageRules } from '../../hooks/useStorageRules';
 import { days, label } from '../../utils/format';
 import Button from '../../components/Button';
 import Notice from '../../components/wizard/Notice';
@@ -129,8 +130,12 @@ export default function WhatIfPage() {
     setBaseline(next);
   }
 
-  const baseReq = toRequest(baseline);
-  const varReq = toRequest(baseline, variant);
+  // Baseline and variant are the same food, so one rule covers both.
+  const rule = scenarioRule(useStorageRules(), baseline);
+  const baseProblem = storageProblem(rule, baseline.conditions);
+  const varProblem = storageProblem(rule, variant);
+  const baseReq = toRequest(baseline, baseline.conditions, rule);
+  const varReq = toRequest(baseline, variant, rule);
   const conditionsChanged = JSON.stringify(variant) !== JSON.stringify(baseline.conditions);
   const payload = baseReq && varReq ? {
     baseline: { scenario: baseReq, structure: baseStructure ? { structureId: baseStructure } : null },
@@ -159,7 +164,7 @@ export default function WhatIfPage() {
             <h2 className={styles.panelTitle} id="base-title">Baseline</h2>
             <p className={styles.panelSub}>{baseline.commodityKey === FROM_ANALYSIS ? 'From your analysis.' : 'The situation today.'}</p>
             <div className={styles.gap}>
-              <ScenarioEditor idPrefix="base" scenario={baseline} onChange={changeBaseline} catalog={catalog.data?.results} fromAnalysis={fromAnalysis} />
+              <ScenarioEditor idPrefix="base" scenario={baseline} onChange={changeBaseline} catalog={catalog.data?.results} fromAnalysis={fromAnalysis} rule={rule} />
             </div>
             <div className={styles.gap}>
               <StructureSelect id="base-structure" label="Package" value={baseStructure} onChange={setBaseStructure}
@@ -187,7 +192,7 @@ export default function WhatIfPage() {
               ))}
             </div>
             <div className={styles.gap}>
-              <ConditionFields idPrefix="var" conditions={variant} onChange={setVariant} compareTo={baseline.conditions} />
+              <ConditionFields idPrefix="var" conditions={variant} onChange={setVariant} compareTo={baseline.conditions} rule={rule} />
             </div>
             <div className={styles.gap}>
               <StructureSelect id="var-structure" label="Package" value={variantStructure} onChange={setVariantStructure}
@@ -198,8 +203,13 @@ export default function WhatIfPage() {
 
         <div>
           <p className={styles.status} role="status" aria-live="polite">
-            {result.status === 'loading' && payload ? 'Comparing…' : !payload ? 'Fix the highlighted values to compare.' : ''}
+            {result.status === 'loading' && payload ? 'Comparing…' : !payload && !baseProblem && !varProblem ? 'Fix the highlighted values to compare.' : ''}
           </p>
+          {(baseProblem || varProblem) && (
+            <Notice tone="warn" title={baseProblem ? "The baseline isn't supported for this food" : "The change isn't supported for this food"}>
+              {baseProblem || varProblem} {baseProblem ? 'Change the baseline storage to compare.' : 'Pick another change to compare.'}
+            </Notice>
+          )}
           {nothingChanged && payload && (
             <div className={styles.gap}>
               <Notice tone="info" title="Change something to compare">Pick a preset or edit a value on the left. Until then, before and after are the same.</Notice>
@@ -215,7 +225,7 @@ export default function WhatIfPage() {
             </div>
           )}
           {!result.data && result.status === 'loading' && <div className={`${styles.panel} ${styles.gap}`}><Skeleton height={300} /></div>}
-          {result.data && (
+          {result.data && payload && (
             <div className={`${styles.gap} ${result.status === 'loading' ? styles.busy : ''}`}>
               <Results data={result.data} />
             </div>

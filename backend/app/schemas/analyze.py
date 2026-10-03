@@ -71,7 +71,7 @@ class AnalyzeRequest(CamelModel):
                     "profile": {"moisturePct": 94.0, "ph": 4.5, "fatPct": 0.2, "respirationClass": "high",
                                 "oxidationSensitivity": "medium", "category": "fresh_produce"},
                 },
-                "conditions": {"storageType": "chilled", "temperatureC": 6, "relativeHumidityPct": 85,
+                "conditions": {"storageType": "chilled", "temperatureC": 12, "relativeHumidityPct": 85,
                                "targetShelfLifeDays": 20, "transportMode": "refrigerated_transport", "transportStress": "medium"},
                 "priorities": {"shelfLife": 0.8, "cost": 0.4, "sustainability": 0.7, "mechanicalStrength": 0.5, "hardConstraints": []},
             }

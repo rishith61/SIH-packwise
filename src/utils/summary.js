@@ -1,6 +1,6 @@
 import { STORAGE_TYPES, TRANSPORT_MODES, optionLabel } from '../data/wizard';
 
-/** One-line recap of the user's own conditions, e.g. "chilled storage at 6 °C, 85% RH · …". */
+/** One-line recap of the user's own conditions, e.g. "chilled storage at 12 °C, 85% RH · …". */
 export function conditionsSummary(state) {
   const c = state.conditions;
   const parts = [];

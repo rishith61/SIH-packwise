@@ -64,6 +64,20 @@ export function getCommodity(commodityId, { signal } = {}) {
   return request('/api/commodities/' + encodeURIComponent(commodityId), { signal });
 }
 
+let storageRules = null;
+
+/**
+ * GET /api/storage-rules → { commodities: { id: rule }, categories: { category: rule } }.
+ * Fetched once per page load; a failed fetch is retried on the next call.
+ */
+export function getStorageRules() {
+  if (!storageRules) {
+    storageRules = (USING_MOCKS ? mock.getStorageRules() : request('/api/storage-rules'))
+      .catch((error) => { storageRules = null; throw error; });
+  }
+  return storageRules;
+}
+
 /** POST /api/analyze → the full explainable result. */
 export function analyze(payload, { signal } = {}) {
   if (USING_MOCKS) return mock.analyze(payload, { signal });

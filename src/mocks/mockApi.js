@@ -24,6 +24,7 @@ if (typeof window !== 'undefined') {
 // Fixtures load on first use so they stay out of the main bundle.
 const load = {
   commodities: () => import('./fixtures/commodities.json').then((m) => m.default),
+  storageRules: () => import('./fixtures/storage_rules.json').then((m) => m.default),
   analyses: () => import('./fixtures/analyses.json').then((m) => m.default),
   materials: () => import('./fixtures/materials.json').then((m) => m.default),
   structures: () => import('./fixtures/structures.json').then((m) => m.default),
@@ -52,6 +53,10 @@ export async function getCommodity(commodityId, { signal } = {}) {
   const hit = all.find((c) => c.commodityId === commodityId);
   if (!hit) throw notFound('That commodity is no longer in the catalog.');
   return structuredClone(hit);
+}
+
+export async function getStorageRules() {
+  return structuredClone(await load.storageRules());
 }
 
 export async function analyze(payload, { signal } = {}) {

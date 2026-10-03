@@ -2,9 +2,11 @@ from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 
 from ..db.session import get_db
+from ..engine import storage
+from ..engine.types import category_defaults
 from ..engine.context import PROFILE_KEYS
 from ..errors import ApiError
-from ..repo import get_commodity, search_commodities
+from ..repo import get_commodity, search_commodities, to_commodity
 
 router = APIRouter(tags=["commodities"])
 
@@ -34,3 +36,10 @@ def detail(commodity_id: str, db: Session = Depends(get_db)) -> dict:
     body["aliases"] = record.aliases
     body["source"] = record.source
     return body
+
+
+@router.get("/api/storage-rules")
+def storage_rules(db: Session = Depends(get_db)) -> dict:
+    """Allowed storage types and minimum temperatures, per catalog food and per category (for custom foods)."""
+    records = [to_commodity(c) for c in search_commodities(db, "", limit=10_000)]
+    return storage.table(records, category_defaults())
