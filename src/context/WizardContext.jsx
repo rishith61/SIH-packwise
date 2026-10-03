@@ -96,8 +96,3 @@ export function WizardProvider({ children }) {
 export function useWizard() {
   return useContext(WizardContext);
 }
-
-/** Server-side validation message for a contract field path, if any. */
-export function useFieldError(path) {
-  return useContext(WizardContext).state.fieldErrors[path] || null;
-}

@@ -144,10 +144,7 @@
 .tile dt { font-size: 13px; color: var(--muted); }
 .tile dd { margin: 2px 0 0; font-size: 1.25rem; font-weight: 500; font-variant-numeric: tabular-nums; }
 .tile small { display: block; font-size: 12px; font-weight: 400; color: var(--muted); }
-.ok { color: var(--produce); }
 .warn { color: var(--warn); }
-.tile small.ok { color: var(--produce); }
-.tile small.warn { color: var(--warn); }
 .violations { margin: var(--sp-2) 0 0; padding-left: var(--sp-5); display: grid; gap: var(--sp-1); }
 .busy { opacity: .55; transition: opacity .2s; }
 

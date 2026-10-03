@@ -40,7 +40,6 @@
 .span2 { grid-column: 1 / -1; }
 @media (max-width: 720px) { .formGrid { grid-template-columns: 1fr; } }
 
-.stack { display: grid; gap: var(--sp-4); }
 .notes { margin-top: var(--sp-5); }
 .notesText { margin-top: var(--sp-1); color: var(--text); font-style: italic; }
 .notesTags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: var(--sp-2); }
