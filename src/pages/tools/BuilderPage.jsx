@@ -8,6 +8,7 @@ import { initialScenario, scenarioRule, storageProblem, toRequest, wizardScenari
 import { useStorageRules } from '../../hooks/useStorageRules';
 import { inr, label, num } from '../../utils/format';
 import Button from '../../components/Button';
+import Term from '../../components/Term';
 import Notice from '../../components/wizard/Notice';
 import ProvenanceBadge from '../../components/wizard/ProvenanceBadge';
 import RequirementTable from '../../components/wizard/RequirementTable';
@@ -104,14 +105,14 @@ function Indicators({ data }) {
       <ShelfLifeVerdict shelfLife={ind.shelfLife} highBarrier={high.length ? high.join(' and ') : null} />
       <dl className={`${styles.tiles} ${styles.gap}`}>
         <div className={styles.tile}><dt>Cost</dt><dd>{inr(ind.costInrPerPack)}<small>{label(ind.costBand)} band</small></dd></div>
-        <div className={styles.tile}><dt>Oxygen barrier</dt><dd>{label(ind.barrier.oxygen)}<small>OTR {num(ind.barrier.otrTest)}</small></dd></div>
-        <div className={styles.tile}><dt>Moisture barrier</dt><dd>{label(ind.barrier.moisture)}<small>WVTR {num(ind.barrier.wvtrTest)}</small></dd></div>
+        <div className={styles.tile}><dt>Oxygen barrier</dt><dd>{label(ind.barrier.oxygen)}<small><Term term="OTR" /> {num(ind.barrier.otrTest)}</small></dd></div>
+        <div className={styles.tile}><dt>Moisture barrier</dt><dd>{label(ind.barrier.moisture)}<small><Term term="WVTR" /> {num(ind.barrier.wvtrTest)}</small></dd></div>
         <div className={styles.tile}><dt>Carbon</dt><dd>{num(ind.sustainability.gCo2ePerPack, 'g')}<small>CO₂e per pack</small></dd></div>
         <div className={styles.tile}>
           <dt>Recyclability</dt>
-          <dd>{ind.sustainability.recyclabilityIndex}/100<small>{ind.sustainability.recyclable ? 'Recyclable' : 'Hard to recycle'} · EPR {ind.sustainability.eprCategory}</small></dd>
+          <dd>{ind.sustainability.recyclabilityIndex}/100<small>{ind.sustainability.recyclable ? 'Recyclable' : 'Hard to recycle'} · <Term term="EPR" /> {ind.sustainability.eprCategory}</small></dd>
         </div>
-        <div className={styles.tile}><dt>Strength</dt><dd>{ind.mechanicalIndex}/100<small>Mechanical index</small></dd></div>
+        <div className={styles.tile}><dt>Strength</dt><dd>{ind.mechanicalIndex}/100<small><Term term="mechanical index">Mechanical index</Term></small></dd></div>
       </dl>
       <div className={styles.gap}>
         {data.violations?.length ? (

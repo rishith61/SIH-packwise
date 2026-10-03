@@ -1,5 +1,6 @@
 import ProvenanceBadge from './ProvenanceBadge';
 import StatusPill from './StatusPill';
+import { WithTerms } from '../Term';
 import styles from './Result.module.css';
 
 /** One row per packaging requirement: target, candidate status and provenance. Values render verbatim. */
@@ -22,7 +23,7 @@ export default function RequirementTable({ rows, caption = 'Packaging requiremen
         <tbody>
           {rows.map((row, i) => (
             <tr key={row.label + i}>
-              <th scope="row">{row.label}</th>
+              <th scope="row"><WithTerms text={row.label} /></th>
               <td>{row.value ?? <span className={styles.na}>Not reported</span>}</td>
               <td><StatusPill status={row.status} /></td>
               <td><ProvenanceBadge value={row.provenance} /></td>

@@ -24,7 +24,10 @@
 .na { color: var(--muted); font-style: italic; font-size: 14px; }
 
 /* ---------- Tables ---------- */
-.tableWrap { overflow-x: auto; margin-top: var(--sp-4); -webkit-overflow-scrolling: touch; }
+/* position: relative so absolutely positioned descendants (e.g. .sr-only labels) are clipped by the scroller. */
+.tableWrap { position: relative; margin-top: var(--sp-4); }
+/* Scroll only where tables can outgrow the panel; elsewhere tooltips must not be clipped. */
+@media (max-width: 900px) { .tableWrap { overflow-x: auto; -webkit-overflow-scrolling: touch; } }
 .table { width: 100%; border-collapse: collapse; font-size: 15px; }
 .table th, .table td { text-align: left; padding: var(--sp-3) var(--sp-3); border-bottom: 1px solid var(--border); vertical-align: middle; }
 .table thead th { font-size: 12px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding-top: 0; }

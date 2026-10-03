@@ -1,4 +1,5 @@
 import { inr, label, num } from '../../utils/format';
+import Term from '../Term';
 import ConfidenceBadge from './ConfidenceBadge';
 import ProvenanceBadge from './ProvenanceBadge';
 import ShelfLifeVerdict from './ShelfLifeVerdict';
@@ -28,7 +29,7 @@ export default function ResultSummary({ result }) {
             <dt>Packaging cost</dt>
             <dd>
               <span className={styles.value}>{inr(c.inrPerPack)}</span>
-              <span className={styles.detail}>per pack{c.costBand && <> · {label(c.costBand).toLowerCase()} cost band</>}</span>
+              <span className={styles.detail}>per pack{c.costBand && <> · {label(c.costBand).toLowerCase()} <Term term="cost band" /></>}</span>
             </dd>
           </div>
         )}

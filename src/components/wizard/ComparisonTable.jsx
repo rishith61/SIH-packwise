@@ -1,6 +1,7 @@
 import { days, inr, num } from '../../utils/format';
 import ProvenanceBadge from './ProvenanceBadge';
 import StatusPill from './StatusPill';
+import { WithTerms } from '../Term';
 import styles from './Result.module.css';
 
 /**
@@ -41,7 +42,7 @@ export default function ComparisonTable({ primary, alternatives }) {
         <tbody>
           {labels.map((label) => (
             <tr key={label}>
-              <th scope="row">{label}</th>
+              <th scope="row"><WithTerms text={label} /></th>
               {columns.map((col, i) => {
                 const r = find(col, label);
                 return (
@@ -62,7 +63,7 @@ export default function ComparisonTable({ primary, alternatives }) {
           ))}
           {figureRows.map(([label, get]) => (
             <tr key={label}>
-              <th scope="row">{label}</th>
+              <th scope="row"><WithTerms text={label} /></th>
               {columns.map((col, i) => <td key={i}>{get(col) ?? <span className={styles.na}>Not reported</span>}</td>)}
             </tr>
           ))}

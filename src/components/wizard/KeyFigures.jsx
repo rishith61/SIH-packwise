@@ -1,4 +1,5 @@
 import { inr, label, num } from '../../utils/format';
+import Term from '../Term';
 import ProvenanceBadge from './ProvenanceBadge';
 import ShelfLifeVerdict from './ShelfLifeVerdict';
 import resultStyles from './Result.module.css';
@@ -27,8 +28,8 @@ export default function KeyFigures({ shelfLife, costAndImpact, title = 'At a gla
             <dd>
               <span className={styles.value}>{inr(c.inrPerPack)}</span>
               <span className={styles.detail}>
-                {c.costBand && <>{label(c.costBand)} cost band</>}
-                {inr(c.eprFeeInrPerPack) && <> · EPR fee {inr(c.eprFeeInrPerPack)}</>}
+                {c.costBand && <>{label(c.costBand)} <Term term="cost band" /></>}
+                {inr(c.eprFeeInrPerPack) && <> · <Term term="EPR" /> fee {inr(c.eprFeeInrPerPack)}</>}
               </span>
             </dd>
           </div>
@@ -48,9 +49,9 @@ export default function KeyFigures({ shelfLife, costAndImpact, title = 'At a gla
             <dd>
               <span className={styles.value}>{c.recyclable ? 'Recyclable' : 'Hard to recycle'}</span>
               <span className={styles.detail}>
-                {c.monoMaterial ? 'Mono-material' : 'Multi-material'}
+                {c.monoMaterial ? <Term term="Mono-material" /> : 'Multi-material'}
                 {num(c.recyclabilityIndex) && <> · index {c.recyclabilityIndex}/100</>}
-                {c.eprCategory && <> · EPR category {c.eprCategory}</>}
+                {c.eprCategory && <> · <Term term="EPR" /> category {c.eprCategory}</>}
               </span>
             </dd>
           </div>

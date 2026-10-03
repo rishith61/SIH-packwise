@@ -1,6 +1,9 @@
 import { cx } from '../utils/cx';
 import styles from '../pages/tools/Tools.module.css';
 
+/** Shown wherever a film's sealability is "none" (score 0). */
+export const NO_SEAL_NOTE = "Can't be heat-sealed on its own, so it needs a sealant layer (such as PE or CPP) on the food side.";
+
 export const MATERIAL_INDICATORS = [
   ['oxygenBarrier', 'Oxygen barrier'],
   ['moistureBarrier', 'Moisture barrier'],

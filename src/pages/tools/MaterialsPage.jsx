@@ -4,7 +4,8 @@ import { useQuery } from '../../hooks/useQuery';
 import { useFocusOnMount } from '../../hooks/useFocusOnMount';
 import { label, num } from '../../utils/format';
 import Button from '../../components/Button';
-import IndicatorBars from '../../components/IndicatorBars';
+import Term from '../../components/Term';
+import IndicatorBars, { NO_SEAL_NOTE } from '../../components/IndicatorBars';
 import Skeleton from '../../components/wizard/Skeleton';
 import Notice from '../../components/wizard/Notice';
 import LayerStack from '../../components/wizard/LayerStack';
@@ -103,9 +104,10 @@ function Films({ params, setParam }) {
                       <p className={styles.cardMeta}>{familyLabel(m.family)} · {m.polymerClass}{m.properties.compostable ? ' · compostable' : ''}</p>
                     </div>
                     <IndicatorBars values={m.indicators} />
+                    {m.properties.sealability === 'none' && <p className={styles.cardNote}>{NO_SEAL_NOTE}</p>}
                     <dl className={styles.facts}>
-                      <div><dt>OTR</dt><dd>{num(m.properties.otr.value)}</dd></div>
-                      <div><dt>WVTR</dt><dd>{num(m.properties.wvtr.value)}</dd></div>
+                      <div><dt><Term term="OTR" /></dt><dd>{num(m.properties.otr.value)}</dd></div>
+                      <div><dt><Term term="WVTR" /></dt><dd>{num(m.properties.wvtr.value)}</dd></div>
                       <div><dt>₹/kg</dt><dd>{m.properties.costInrPerKg.join('–')}</dd></div>
                     </dl>
                   </article>
@@ -139,8 +141,8 @@ function Structures() {
               </div>
               <LayerStack layers={s.layers} />
               <dl className={styles.facts}>
-                <div><dt>OTR</dt><dd>{num(s.otrTest)}</dd></div>
-                <div><dt>WVTR</dt><dd>{num(s.wvtrTest)}</dd></div>
+                <div><dt><Term term="OTR" /></dt><dd>{num(s.otrTest)}</dd></div>
+                <div><dt><Term term="WVTR" /></dt><dd>{num(s.wvtrTest)}</dd></div>
                 <div><dt>Strength</dt><dd>{s.mechanicalIndex}/100</dd></div>
                 <div><dt>Recyclability</dt><dd>{s.recyclabilityIndex}/100</dd></div>
               </dl>
@@ -177,8 +179,8 @@ export default function MaterialsPage() {
         <p className={styles.eyebrow}>Material Explorer</p>
         <h1 className={styles.title} tabIndex={-1} ref={headingRef}>Packaging materials</h1>
         <p className={styles.sub}>
-          Every film and structure the engine can recommend, with the data it uses. Scores run from 0 to 100, higher is better;
-          OTR is in cc/m²·day·atm and WVTR in g/m²·day at the film's reference thickness.
+          Every film and structure the engine can recommend, with the data it uses. Scores run from 0 to 100, higher is better;{' '}
+          <Term term="OTR" /> is in cc/m²·day·atm and <Term term="WVTR" /> in g/m²·day at the film's reference thickness.
         </p>
       </header>
       <div className={styles.tabs} role="tablist" aria-label="What to browse">

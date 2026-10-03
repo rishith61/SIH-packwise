@@ -1,4 +1,5 @@
 import { num } from '../../utils/format';
+import { WithTerms } from '../Term';
 import LayerStack from './LayerStack';
 import ProvenanceBadge from './ProvenanceBadge';
 import resultStyles from './Result.module.css';
@@ -45,7 +46,7 @@ export default function SpecificationPanel({ spec, title = 'Specification' }) {
       {rows.length > 0 && (
         <dl className={styles.specs}>
           {rows.map(([k, v]) => (
-            <div key={k}><dt>{k}</dt><dd>{v}</dd></div>
+            <div key={k}><dt><WithTerms text={k} /></dt><dd>{v}</dd></div>
           ))}
         </dl>
       )}

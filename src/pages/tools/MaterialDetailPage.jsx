@@ -4,7 +4,8 @@ import { useQuery } from '../../hooks/useQuery';
 import { useFocusOnMount } from '../../hooks/useFocusOnMount';
 import { label, num } from '../../utils/format';
 import Button from '../../components/Button';
-import IndicatorBars from '../../components/IndicatorBars';
+import { WithTerms } from '../../components/Term';
+import IndicatorBars, { NO_SEAL_NOTE } from '../../components/IndicatorBars';
 import Notice from '../../components/wizard/Notice';
 import ProvenanceBadge from '../../components/wizard/ProvenanceBadge';
 import Skeleton from '../../components/wizard/Skeleton';
@@ -21,11 +22,11 @@ function Transmission({ t }) {
 function Detail({ m }) {
   const p = m.properties;
   const rows = [
-    ['Oxygen transmission', <Transmission t={p.otr} />],
-    ['Water vapour transmission', <Transmission t={p.wvtr} />],
+    ['Oxygen transmission (OTR)', <Transmission t={p.otr} />],
+    ['Water vapour transmission (WVTR)', <Transmission t={p.wvtr} />],
     ['Reference thickness', num(p.referenceThicknessUm, 'µm')],
     ['Density', num(p.densityGcm3, 'g/cm³')],
-    ['Sealability', label(p.sealability)],
+    ['Sealability', p.sealability === 'none' ? <>None<small>{NO_SEAL_NOTE}</small></> : label(p.sealability)],
     ['Seal range', range(p.sealRangeC, '°C')],
     ['Gelbo flex pinholes', range(p.gelboPinholes)],
     ['Light barrier', label(p.lightBarrier)],
@@ -48,7 +49,7 @@ function Detail({ m }) {
         <table className={styles.props}>
           <caption className="sr-only">Material properties</caption>
           <tbody>
-            {rows.map(([k, v]) => <tr key={k}><th scope="row">{k}</th><td>{v}</td></tr>)}
+            {rows.map(([k, v]) => <tr key={k}><th scope="row"><WithTerms text={k} /></th><td>{v}</td></tr>)}
           </tbody>
         </table>
         {m.source && <p className={styles.source}>Source: {m.source}</p>}

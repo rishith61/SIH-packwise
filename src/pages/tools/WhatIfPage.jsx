@@ -8,6 +8,7 @@ import { FROM_ANALYSIS, conditionErrors, initialScenario, scenarioRule, storageP
 import { useStorageRules } from '../../hooks/useStorageRules';
 import { days, label } from '../../utils/format';
 import Button from '../../components/Button';
+import { WithTerms } from '../../components/Term';
 import Notice from '../../components/wizard/Notice';
 import Skeleton from '../../components/wizard/Skeleton';
 import ScenarioEditor, { ConditionFields } from '../../components/tools/ScenarioEditor';
@@ -82,7 +83,7 @@ function Results({ data }) {
             <tbody>
               {data.changes.map((c) => (
                 <tr key={c.indicator}>
-                  <th scope="row">{c.indicator}</th>
+                  <th scope="row"><WithTerms text={c.indicator} /></th>
                   <td className={styles.num}>{show(c.before)}</td>
                   <td className={styles.num}>{show(c.after)}</td>
                   <td><span className={styles.dir} data-dir={c.direction}>{DIRECTION[c.direction] || c.direction}</span></td>

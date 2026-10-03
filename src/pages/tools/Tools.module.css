@@ -76,6 +76,7 @@
 .facts dt { color: var(--muted); }
 .facts dd { margin: 0; font-variant-numeric: tabular-nums; }
 .cardActions { margin-top: auto; display: flex; gap: var(--sp-2); position: relative; z-index: 1; }
+.cardNote { font-size: 13px; color: var(--warn); }
 
 /* ---------- Indicator bars ---------- */
 .bars { display: grid; gap: 6px; margin: 0; }
@@ -115,23 +116,23 @@
 @media (max-width: 480px) { .fieldGrid { grid-template-columns: 1fr; } }
 
 .layers { list-style: none; margin: var(--sp-3) 0 0; padding: 0; display: grid; gap: var(--sp-2); }
+/* Material on its own line so long film names fit; thickness and move/remove below. */
 .layerRow {
-  display: grid; grid-template-columns: 1.6em minmax(0, 1fr) 5em auto; gap: var(--sp-2); align-items: center;
+  display: grid; grid-template-columns: 1.6em 6em minmax(0, 1fr); grid-template-areas: "n mat mat" ". th tools";
+  gap: var(--sp-2); align-items: center;
   padding: var(--sp-2); border-radius: var(--r-control); background: var(--bg); border: 1px solid var(--border);
 }
-.layerIndex { text-align: center; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.layerIndex { grid-area: n; text-align: center; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.layerRow > .select { grid-area: mat; }
+.layerRow > .control { grid-area: th; }
 .layerRow .select, .layerRow .input { min-height: 38px; }
-.layerTools { display: flex; gap: 2px; }
+.layerTools { grid-area: tools; justify-self: end; display: flex; gap: 2px; }
 .iconBtn {
   width: 32px; height: 32px; display: grid; place-items: center; border-radius: 6px; cursor: pointer;
   border: 1px solid transparent; background: transparent; color: var(--muted); font-size: 15px; line-height: 1;
 }
 .iconBtn:hover:not(:disabled) { color: var(--text); background: var(--surface-2); border-color: var(--border-strong); }
 .iconBtn:disabled { opacity: .35; cursor: not-allowed; }
-@media (max-width: 480px) {
-  .layerRow { grid-template-columns: 1.4em minmax(0, 1fr) 5.5em; }
-  .layerTools { grid-column: 2 / -1; justify-content: flex-end; }
-}
 .layerEnds { display: flex; justify-content: space-between; margin-top: var(--sp-1); font-size: 12px; color: var(--muted); }
 .row { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; margin-top: var(--sp-3); }
 .hint { margin-top: var(--sp-2); font-size: 13px; color: var(--muted); }
@@ -163,5 +164,6 @@
 .dir[data-dir="better"] { color: var(--produce); }
 .dir[data-dir="worse"] { color: var(--danger); }
 .dir[data-dir="same"] { color: var(--muted); }
-.tableWrap { overflow-x: auto; }
+.tableWrap { position: relative; }
+@media (max-width: 700px) { .tableWrap { overflow-x: auto; } }
 .tableWrap .changes { min-width: 480px; }

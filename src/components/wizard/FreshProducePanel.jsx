@@ -1,4 +1,5 @@
 import styles from './Result.module.css';
+import Term from '../Term';
 
 const NOT_AVAILABLE = 'Not available for this scenario';
 
@@ -27,7 +28,7 @@ export default function FreshProducePanel({ data }) {
           <dd>{show(data?.gasExchangeRequirement) ?? <span className={styles.na}>{NOT_AVAILABLE}</span>}</dd>
         </div>
         <div>
-          <dt>MAP suitability</dt>
+          <dt><Term term="MAP" /> suitability</dt>
           <dd>
             {mapLabel
               ? <span className={styles.mapFlag} data-ok={data.mapSuitable ? '' : undefined}>{mapLabel}</span>
