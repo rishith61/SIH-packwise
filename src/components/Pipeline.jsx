@@ -39,7 +39,7 @@ export default function Pipeline() {
             Every recommendation follows the same path, and each stage here is a real step of the analysis.
             Requirements come first. Materials are only named once they're known.
           </p>
-          <Button to="/analyze/commodity" className={styles.cta}>Start packaging analysis</Button>
+          <Button to="/analyze/food" className={styles.cta}>Start packaging analysis</Button>
         </div>
         <ol className={styles.stages} ref={listRef}>
           {PIPELINE.map((stage, i) => (

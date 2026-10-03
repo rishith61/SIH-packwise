@@ -11,10 +11,8 @@ import OilBottleIcon from '../components/icons/OilBottleIcon';
  */
 
 export const WIZARD_STEPS = [
-  { id: 'commodity', title: 'Commodity', path: '/analyze/commodity' },
-  { id: 'profile', title: 'Food profile', path: '/analyze/profile' },
-  { id: 'conditions', title: 'Conditions', path: '/analyze/conditions' },
-  { id: 'priorities', title: 'Priorities', path: '/analyze/priorities' },
+  { id: 'food', title: 'Food', path: '/analyze/food' },
+  { id: 'journey', title: 'Journey', path: '/analyze/journey' },
   { id: 'result', title: 'Result', path: '/analyze/result' },
 ];
 

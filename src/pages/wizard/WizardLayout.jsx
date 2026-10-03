@@ -23,18 +23,17 @@ export default function WizardLayout() {
   const current = stepIndexFor(pathname);
 
   const done = stepCompletion(state, storageRule);
-  // Priorities always validate, so they only count as complete once an analysis has been run.
-  const doneList = [done.commodity, done.profile, done.conditions, done.priorities && done.result, done.result];
+  // The journey step always has priorities set, so it only counts as complete once an analysis has run.
+  const doneList = [done.profile, done.conditions && done.result, done.result];
   const loadingCommodity = state.commodityLoad.status !== 'idle';
   const isReachable = (i) => {
     if (i === 0) return true;
-    if (i === 1) return done.commodity || loadingCommodity;
-    if (i === 4) return done.result;
-    return doneList[i - 1];
+    if (i === 1) return done.profile;
+    return done.result;
   };
 
-  // Deep links to a later input step fall back to the furthest step the user can be on.
-  if (current > 0 && current < 4 && !isReachable(current)) {
+  // A deep link to the journey before a food is chosen goes back to the food step.
+  if (current === 1 && !isReachable(current)) {
     let target = current;
     while (target > 0 && !isReachable(target)) target--;
     return <Navigate to={WIZARD_STEPS[target].path} replace />;

@@ -16,12 +16,12 @@ export default function PackWiseBridge() {
   useEffect(() => {
     function onCategory(e) {
       const category = LANDING_CATEGORY_MAP[e.detail.category];
-      navigate('/analyze/commodity' + (category ? '?category=' + category : ''));
+      navigate('/analyze/food' + (category ? '?category=' + category : ''));
     }
     function onCustom(e) {
       const { description, tags } = e.detail;
       startCustom({ name: nameFromDescription(description), notes: { description, tags } });
-      navigate('/analyze/profile');
+      navigate('/analyze/food');
     }
     document.addEventListener('packwise:start-category', onCategory);
     document.addEventListener('packwise:start-custom', onCustom);

@@ -63,7 +63,7 @@ export default function RunningStep() {
   }, [status, announce]);
 
   // Arrived without a request in flight (e.g. a reload): go somewhere useful.
-  if (status === 'idle') return <Navigate to={result ? '/analyze/result' : '/analyze/priorities'} replace />;
+  if (status === 'idle') return <Navigate to={result ? '/analyze/result' : '/analyze/journey'} replace />;
 
   const name = state.commodity.commodityName;
 
@@ -83,7 +83,7 @@ export default function RunningStep() {
               <>
                 {stepPath && <Button size="sm" to={stepPath}>Fix {fieldLabel(error.field)}</Button>}
                 <Button size="sm" variant={stepPath ? 'ghost' : 'primary'} onClick={runAnalysis}>Retry analysis</Button>
-                <Button size="sm" variant="ghost" to="/analyze/priorities">Back to priorities</Button>
+                <Button size="sm" variant="ghost" to="/analyze/journey">Back to the journey</Button>
               </>
             )}
           >

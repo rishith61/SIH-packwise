@@ -51,7 +51,7 @@ export default function ReportPage() {
   const [exporting, setExporting] = useState(false);
   const result = state.analysis.result;
 
-  if (!result) return <Navigate to="/analyze/priorities" replace />;
+  if (!result) return <Navigate to="/analyze/journey" replace />;
 
   const alternatives = result.alternatives || [];
   const selected = state.compare ?? alternatives.map((_, i) => i);

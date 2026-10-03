@@ -1,25 +1,21 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
 import { useWizard } from '../../context/WizardContext';
 import { CONSTRAINT_SUGGESTIONS, PRIORITY_FIELDS, constraintLabel, excludeMaterial, maxGauge } from '../../data/wizard';
 import { listMaterials } from '../../services/api';
-import { useFocusOnMount } from '../../hooks/useFocusOnMount';
 import { useQuery } from '../../hooks/useQuery';
 import Button from '../../components/Button';
 import TagChip from '../../components/TagChip';
 import LockIcon from '../../components/icons/LockIcon';
 import ScaleIcon from '../../components/icons/ScaleIcon';
-import StepActions from '../../components/wizard/StepActions';
 import fieldStyles from '../../components/wizard/Field.module.css';
 import styles from './Wizard.module.css';
-import own from './PrioritiesStep.module.css';
+import own from './PrioritiesSection.module.css';
 
 const WEIGHT_WORDS = ['Ignore', 'Very low', 'Low', 'Low', 'Moderate', 'Moderate', 'Moderate', 'High', 'High', 'Very high', 'Critical'];
 
-export default function PrioritiesStep() {
-  const { state, dispatch, runAnalysis } = useWizard();
-  const navigate = useNavigate();
-  const headingRef = useFocusOnMount();
+/** Priority weights and hard constraints on the Journey step. */
+export default function PrioritiesSection() {
+  const { state, dispatch } = useWizard();
   const [material, setMaterial] = useState('');
   const [gauge, setGauge] = useState('');
   const materials = useQuery((signal) => listMaterials({}, { signal }), 'materials').data?.results || [];
@@ -41,25 +37,16 @@ export default function PrioritiesStep() {
 
   const gaugeOk = Number(gauge) > 0 && Number(gauge) <= 1000;
 
-  function analyze() {
-    runAnalysis();
-    navigate('/analyze/running');
-  }
-
   return (
-    <div className={styles.page}>
-      <p className={styles.eyebrow}>Step 4 of 5</p>
-      <h1 className={styles.title} tabIndex={-1} ref={headingRef}>What matters most?</h1>
-      <p className={styles.sub}>
-        Weight each priority independently. Candidates that pass the requirements are ranked with these weights, so the trade-offs stay explicit.
-      </p>
-
+    <>
       <section className={`${styles.panel} ${styles.section}`} aria-labelledby="weights-title">
         <div className={styles.panelHead}>
           <span className={styles.panelIcon} aria-hidden="true"><ScaleIcon /></span>
           <div>
-            <h2 className={styles.panelTitle} id="weights-title">Priority weights</h2>
-            <p className={styles.panelSub}>0 ignores a priority, 1 makes it as important as possible.</p>
+            <h2 className={styles.panelTitle} id="weights-title">What matters most?</h2>
+            <p className={styles.panelSub}>
+              Candidates that pass the requirements are ranked with these weights. 0 ignores a priority, 1 makes it as important as possible.
+            </p>
           </div>
         </div>
 
@@ -162,8 +149,6 @@ export default function PrioritiesStep() {
           </ul>
         )}
       </section>
-
-      <StepActions backTo="/analyze/conditions" nextLabel="Analyze packaging" onNext={analyze} />
-    </div>
+    </>
   );
 }

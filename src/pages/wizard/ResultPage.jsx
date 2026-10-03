@@ -25,7 +25,7 @@ export default function ResultPage() {
   const headingRef = useFocusOnMount();
   const result = state.analysis.result;
 
-  if (!result) return <Navigate to="/analyze/priorities" replace />;
+  if (!result) return <Navigate to="/analyze/journey" replace />;
 
   const stale = state.analysis.payloadKey !== JSON.stringify(buildAnalyzePayload(state));
 
@@ -41,7 +41,7 @@ export default function ResultPage() {
 
   function startOver() {
     reset();
-    navigate('/analyze/commodity');
+    navigate('/analyze/food');
   }
 
   return (
@@ -115,7 +115,7 @@ export default function ResultPage() {
           <Button variant="ghost" to={`/builder?structure=${encodeURIComponent(result.recommendation.structureId)}`}>Adjust in Builder</Button>
         )}
         <Button variant="ghost" to="/what-if">What if conditions change?</Button>
-        <Button variant="ghost" to="/analyze/priorities">Edit inputs</Button>
+        <Button variant="ghost" to="/analyze/journey">Edit inputs</Button>
         <Button variant="ghost" onClick={startOver}>Start a new analysis</Button>
       </div>
     </div>

@@ -337,10 +337,8 @@ export function buildAnalyzePayload(state) {
 /** Maps a contract field path from a VALIDATION_ERROR to the wizard step that owns it. */
 export function stepForField(path) {
   if (!path) return null;
-  if (path.startsWith('commodity.profile') || path === 'commodity.commodityName') return 'profile';
-  if (path.startsWith('commodity')) return 'commodity';
-  if (path.startsWith('conditions')) return 'conditions';
-  if (path.startsWith('priorities')) return 'priorities';
+  if (path.startsWith('commodity')) return 'food';
+  if (path.startsWith('conditions') || path.startsWith('priorities')) return 'journey';
   return null;
 }
 
