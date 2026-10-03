@@ -16,7 +16,7 @@ export function useTheme() {
   const toggleTheme = useCallback(() => {
     const next = currentTheme() === 'light' ? 'dark' : 'light';
     document.documentElement.setAttribute('data-theme', next);
-    try { localStorage.setItem(STORAGE_KEY, next); } catch (e) { /* storage unavailable */ }
+    try { localStorage.setItem(STORAGE_KEY, next); } catch { /* storage unavailable */ }
     setTheme(next);
   }, []);
 
