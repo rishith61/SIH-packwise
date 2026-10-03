@@ -8,6 +8,8 @@ PackWise is a decision-support tool for food packaging. Pick a food, describe ho
 
 > **Prototype status.** The recommendations come from a rule- and physics-based engine, not a trained model. Shelf-life, cost and footprint figures are **prototype estimates** (shown with a ±30 % band) pending laboratory validation, and the UI labels every value with where it came from (source-backed, rule-derived, prototype estimate, or user-edited). A machine-learning shelf-life predictor is **in progress**: the training and loading code exists, but no model has been trained yet because it needs real measured shelf lives. Don't use the output as a packaging specification without testing.
 
+For the complete list of features and what each one does, see **[SPEC.md](SPEC.md)**.
+
 ## What it does
 
 - **Packaging analysis** (`/analyze`): three steps.
@@ -45,7 +47,7 @@ npm run dev                     # http://localhost:5173
 cd backend
 python -m venv .venv
 .venv/Scripts/activate          # Windows; use `source .venv/bin/activate` elsewhere
-pip install -e ".[dev]"
+pip install -r requirements.txt # pinned versions (or: pip install -e ".[dev]")
 uvicorn app.main:app            # http://localhost:8000, API docs at /docs
 ```
 

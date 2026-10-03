@@ -43,6 +43,7 @@ coverage/
 *.pdf
 *.md
 !README.md
+!SPEC.md
 
 # Python backend
 __pycache__/

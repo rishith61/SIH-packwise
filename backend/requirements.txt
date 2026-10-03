@@ -1,0 +1,27 @@
+# PackWise backend dependencies (Python 3.11+), pinned to the versions it was tested with.
+#   pip install -r requirements.txt
+# The ranges these satisfy are declared in pyproject.toml.
+
+# Web API
+fastapi==0.142.2
+starlette==1.7.0
+uvicorn[standard]==0.54.0
+pydantic==2.13.5
+pydantic-settings==2.15.0
+
+# Database (SQLite by default; psycopg is only used when DATABASE_URL points at PostgreSQL)
+SQLAlchemy==2.1.2
+alembic==1.20.0
+psycopg[binary]==3.3.6
+
+# Engine and PDF report
+numpy==2.5.3
+reportlab==5.0.1
+
+# Tests
+pytest==9.1.1
+httpx==0.28.1
+
+# Optional: shelf-life ML predictor (not trained yet; see README). Uncomment to train or load a model.
+# scikit-learn==1.9.1
+# joblib==1.6.0
