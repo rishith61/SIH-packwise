@@ -11,14 +11,22 @@
 .figure dt { font-size: 13px; color: var(--muted); }
 .figure dd { margin: 0; }
 .value { display: block; margin-top: 2px; font-size: 1.5rem; font-weight: 500; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
-.valueText { font-size: 1.15rem; line-height: 1.3; }
 .detail { display: block; margin-top: 2px; font-size: 13px; color: var(--muted); }
-.flag { display: inline-flex; align-items: center; gap: 6px; margin-top: var(--sp-2); font-size: 13px; font-weight: 500; }
-.flag::before { font-size: 12px; }
-.flag[data-ok="true"] { color: var(--produce); }
-.flag[data-ok="true"]::before { content: "✓"; }
-.flag[data-ok="false"] { color: var(--warn); }
-.flag[data-ok="false"]::before { content: "!"; font-weight: 700; }
+
+/* ---------- Shelf-life verdict ---------- */
+.verdict {
+  margin-top: var(--sp-4); padding: var(--sp-4) var(--sp-5); border-radius: var(--r-control);
+  background: var(--bg); border: 1px solid var(--border); border-left: 4px solid var(--tone, var(--border-strong));
+}
+.verdict[data-ok="true"] { --tone: var(--produce); }
+.verdict[data-ok="false"] { --tone: var(--warn); }
+.verdictMain { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px var(--sp-3); }
+.verdictDays { font-size: 2rem; font-weight: 500; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.verdictLabel { color: var(--muted); }
+.verdictTarget { margin-top: var(--sp-1); font-weight: 500; color: var(--tone, var(--text)); }
+.verdictLimit { margin-top: var(--sp-3); padding-top: var(--sp-3); border-top: 1px solid var(--border); }
+.verdictLimit strong { font-weight: 500; }
+.verdictNote { margin-top: var(--sp-2); font-size: 14px; color: var(--warn); }
 
 /* ---------- Risks ---------- */
 .risks { list-style: none; margin: var(--sp-4) 0 0; padding: 0; display: grid; gap: var(--sp-2); }

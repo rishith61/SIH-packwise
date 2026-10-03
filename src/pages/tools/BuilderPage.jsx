@@ -6,12 +6,13 @@ import { useQuery } from '../../hooks/useQuery';
 import { useFocusOnMount } from '../../hooks/useFocusOnMount';
 import { initialScenario, scenarioRule, storageProblem, toRequest, wizardScenario } from '../../lib/scenario';
 import { useStorageRules } from '../../hooks/useStorageRules';
-import { dayRange, days, inr, label, num } from '../../utils/format';
+import { inr, label, num } from '../../utils/format';
 import Button from '../../components/Button';
 import Notice from '../../components/wizard/Notice';
 import ProvenanceBadge from '../../components/wizard/ProvenanceBadge';
 import RequirementTable from '../../components/wizard/RequirementTable';
 import Skeleton from '../../components/wizard/Skeleton';
+import ShelfLifeVerdict from '../../components/wizard/ShelfLifeVerdict';
 import SpecificationPanel from '../../components/wizard/SpecificationPanel';
 import ScenarioEditor from '../../components/tools/ScenarioEditor';
 import styles from './Tools.module.css';
@@ -90,7 +91,7 @@ function LayerEditor({ stack, setStack, materials }) {
 
 function Indicators({ data }) {
   const ind = data.indicators;
-  const s = ind.shelfLife;
+  const high = ['oxygen', 'moisture'].filter((k) => ind.barrier[k] === 'high');
   return (
     <section className={styles.panel} aria-labelledby="ind-title">
       <div className={styles.panelHead}>
@@ -100,14 +101,8 @@ function Indicators({ data }) {
         </div>
         <ProvenanceBadge value={ind.provenance} />
       </div>
-      <dl className={styles.tiles}>
-        <div className={styles.tile}>
-          <dt>Shelf life</dt>
-          <dd>{days(s.estimateDays)}
-            <small>{dayRange(s.lowDays, s.highDays)}</small>
-            <small className={s.meetsTarget ? styles.ok : styles.warn}>{s.meetsTarget ? 'Meets' : 'Below'} {s.targetDays}-day target</small>
-          </dd>
-        </div>
+      <ShelfLifeVerdict shelfLife={ind.shelfLife} highBarrier={high.length ? high.join(' and ') : null} />
+      <dl className={`${styles.tiles} ${styles.gap}`}>
         <div className={styles.tile}><dt>Cost</dt><dd>{inr(ind.costInrPerPack)}<small>{label(ind.costBand)} band</small></dd></div>
         <div className={styles.tile}><dt>Oxygen barrier</dt><dd>{label(ind.barrier.oxygen)}<small>OTR {num(ind.barrier.otrTest)}</small></dd></div>
         <div className={styles.tile}><dt>Moisture barrier</dt><dd>{label(ind.barrier.moisture)}<small>WVTR {num(ind.barrier.wvtrTest)}</small></dd></div>
@@ -118,7 +113,6 @@ function Indicators({ data }) {
         </div>
         <div className={styles.tile}><dt>Strength</dt><dd>{ind.mechanicalIndex}/100<small>Mechanical index</small></dd></div>
       </dl>
-      {s.failureMode && <p className={styles.hint}>Shelf life is limited by {s.failureMode}.</p>}
       <div className={styles.gap}>
         {data.violations?.length ? (
           <Notice tone="warn" title="The analysis would rule this out">

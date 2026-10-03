@@ -1,5 +1,6 @@
-import { dayRange, days, inr, label, num } from '../../utils/format';
+import { inr, label, num } from '../../utils/format';
 import ProvenanceBadge from './ProvenanceBadge';
+import ShelfLifeVerdict from './ShelfLifeVerdict';
 import resultStyles from './Result.module.css';
 import styles from './Insights.module.css';
 
@@ -8,7 +9,6 @@ export default function KeyFigures({ shelfLife, costAndImpact, title = 'At a gla
   if (!shelfLife && !costAndImpact) return null;
   const s = shelfLife || {};
   const c = costAndImpact || {};
-  const range = dayRange(s.lowDays, s.highDays);
 
   return (
     <section className={resultStyles.panel} aria-labelledby="figures-title">
@@ -19,34 +19,8 @@ export default function KeyFigures({ shelfLife, costAndImpact, title = 'At a gla
         </div>
         <ProvenanceBadge value={s.provenance || c.provenance} />
       </div>
+      <ShelfLifeVerdict shelfLife={shelfLife} />
       <dl className={styles.figures}>
-        {days(s.estimateDays) && (
-          <div className={styles.figure}>
-            <dt>Estimated shelf life</dt>
-            <dd>
-              <span className={styles.value}>{days(s.estimateDays)}</span>
-              <span className={styles.detail}>
-                {range && <>Range {range}</>}
-                {range && s.targetDays ? ' · ' : ''}
-                {s.targetDays ? <>target {days(s.targetDays)}</> : null}
-              </span>
-              {typeof s.meetsTarget === 'boolean' && (
-                <span className={styles.flag} data-ok={String(s.meetsTarget)}>
-                  {s.meetsTarget ? 'Meets your target' : 'Below your target'}
-                </span>
-              )}
-            </dd>
-          </div>
-        )}
-        {s.failureMode && (
-          <div className={styles.figure}>
-            <dt>What limits it</dt>
-            <dd>
-              <span className={`${styles.value} ${styles.valueText}`}>{label(s.failureMode)}</span>
-              <span className={styles.detail}>First quality failure expected in this pack</span>
-            </dd>
-          </div>
-        )}
         {inr(c.inrPerPack) && (
           <div className={styles.figure}>
             <dt>Packaging cost</dt>
