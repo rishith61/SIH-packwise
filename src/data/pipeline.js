@@ -29,9 +29,9 @@ export const PIPELINE = [
     chips: ['Hard constraints', 'Compatibility filter'],
   },
   {
-    title: 'AI, rules and optimization converge',
+    title: 'Rules, physics and optimization converge',
     text: 'The remaining candidates are scored against your priorities.',
-    chips: ['Domain rules', 'Model estimates', 'Your priorities'],
+    chips: ['Domain rules', 'Physics-based estimates', 'Your priorities'],
   },
   {
     title: 'Recommended package + specifications',
