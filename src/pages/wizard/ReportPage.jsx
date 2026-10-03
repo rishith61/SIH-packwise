@@ -3,7 +3,7 @@ import { Navigate } from 'react-router';
 import { useWizard } from '../../context/WizardContext';
 import {
   CONDITION_FIELDS, FOOD_CATEGORIES, PRIORITY_FIELDS, PROFILE_FIELDS, RESPIRATION_CLASSES,
-  SENSITIVITY_LEVELS, STORAGE_TYPES, TRANSPORT_MODES, TRANSPORT_STRESS, optionLabel,
+  SENSITIVITY_LEVELS, STORAGE_TYPES, TRANSPORT_MODES, TRANSPORT_STRESS, constraintLabel, optionLabel,
 } from '../../data/wizard';
 import { PROFILE_KEYS, buildAnalyzePayload, lowConfidence } from '../../lib/wizardModel';
 import { USING_MOCKS, fetchReportPdf } from '../../services/api';
@@ -236,7 +236,7 @@ export default function ReportPage() {
                 ))}
                 <tr>
                   <th scope="row">Hard constraints</th>
-                  <td>{priorities.hardConstraints.length ? priorities.hardConstraints.join(', ') : <span className={resultStyles.na}>None</span>}</td>
+                  <td>{priorities.hardConstraints.length ? priorities.hardConstraints.map((c) => constraintLabel(c)).join(', ') : <span className={resultStyles.na}>None</span>}</td>
                 </tr>
               </tbody>
             </table>

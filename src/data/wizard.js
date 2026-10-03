@@ -100,18 +100,33 @@ export const PRIORITY_FIELDS = [
 ];
 
 /*
- * Suggested hard constraints, in the backend's vocabulary (engine/gatekeeper.py).
- * Users can also type exclude_material:<id or family> or max_gauge_um:<n>;
- * anything unrecognised comes back as a warning on the result.
+ * Hard constraints. Values are the backend's vocabulary (engine/gatekeeper.py)
+ * and never shown; labels match gatekeeper.describe().
  */
 export const CONSTRAINT_SUGGESTIONS = [
   { value: 'recyclable:true', label: 'Must be recyclable' },
-  { value: 'mono_material:true', label: 'Mono-material only' },
+  { value: 'mono_material:true', label: 'Single material only' },
   { value: 'compostable:true', label: 'Must be compostable' },
-  { value: 'no_metallised:true', label: 'No metallised layers' },
-  { value: 'max_cost_band:low', label: 'Cost band low at most' },
-  { value: 'max_cost_band:medium', label: 'Cost band medium at most' },
+  { value: 'no_metallised:true', label: 'No metallised or foil layers' },
+  { value: 'max_cost_band:low', label: 'Low cost band at most' },
+  { value: 'max_cost_band:medium', label: 'Medium cost band at most' },
 ];
+
+/** Constraints with one value at a time: picking one replaces the others. */
+export const EXCLUSIVE_CONSTRAINT_PREFIXES = ['max_cost_band:', 'max_gauge_um:'];
+
+export const excludeMaterial = (materialId) => `exclude_material:${materialId}`;
+export const maxGauge = (um) => `max_gauge_um:${um}`;
+
+/** A constraint in words, e.g. "exclude_material:AL_FOIL" -> "No Aluminium foil (9 µm)". */
+export function constraintLabel(raw, materialNames = {}) {
+  const hit = CONSTRAINT_SUGGESTIONS.find((s) => s.value === raw);
+  if (hit) return hit.label;
+  const [key, value = ''] = raw.split(':');
+  if (key === 'exclude_material') return `No ${materialNames[value.toUpperCase()] || value}`;
+  if (key === 'max_gauge_um') return `At most ${value} µm thick`;
+  return raw;
+}
 
 /**
  * Reasoning stages for the analysis screen (spec §6.5). Ids match the

@@ -98,7 +98,7 @@ def test_evaluate_library_structure(client):
     assert r.status_code == 200
 
 
-STARVE = "starve respiring produce"
+STARVE = "would run out of oxygen"
 
 
 def _violations(client, layers, perforation="none"):
@@ -166,3 +166,29 @@ def test_builder_and_what_if_apply_the_same_rules(client):
     assert r.status_code == 422
     r = client.post("/api/what-if", json={"baseline": {"scenario": scenario()}, "variant": {"scenario": frozen}})
     assert r.status_code == 422
+
+
+def _rejections(client, constraints):
+    body = scenario()
+    body["priorities"]["hardConstraints"] = constraints
+    result = client.post("/api/analyze", json=body).json()
+    return result, [reason for r in result["rejected"] for reason in r["reasons"]]
+
+
+def test_constraint_messages_are_plain_language(client):
+    _, reasons = _rejections(client, ["recyclable:true", "no_metallised:true"])
+    text = " ".join(reasons)
+    assert "Not recyclable" in text and "metallised or foil layer, which you ruled out" in text
+    assert ":true" not in text and "Fails your constraint" not in text
+
+
+def test_cost_band_limits_collapse_to_the_strictest(client):
+    _, reasons = _rejections(client, ["max_cost_band:low", "max_cost_band:medium"])
+    cost = [r for r in reasons if r.startswith("Too expensive")]
+    assert cost and all("low-cost target" in r for r in cost)
+
+
+def test_unknown_constraint_warns_without_listing_internal_keys(client):
+    result, _ = _rejections(client, ["gold_plated:true"])
+    warning = next(w for w in result["warnings"] if "gold_plated" in w)
+    assert "wasn't recognised" in warning and "max_cost_band" not in warning

@@ -481,7 +481,7 @@
     "structureId": "BOPA_EVOH",
     "stage": "hard-constraint",
     "reasons": [
-     "A sealed high-barrier laminate would starve respiring produce of oxygen (no gas-exchange path)."
+     "It's a sealed high-barrier pack, so the produce, which keeps breathing after harvest, would run out of oxygen."
     ]
    },
    {
@@ -489,7 +489,7 @@
     "structureId": "BOPA_IONOMER",
     "stage": "hard-constraint",
     "reasons": [
-     "A sealed high-barrier laminate would starve respiring produce of oxygen (no gas-exchange path)."
+     "It's a sealed high-barrier pack, so the produce, which keeps breathing after harvest, would run out of oxygen."
     ]
    },
    {
@@ -497,7 +497,7 @@
     "structureId": "BOPA_MLLDPE",
     "stage": "hard-constraint",
     "reasons": [
-     "A sealed high-barrier laminate would starve respiring produce of oxygen (no gas-exchange path)."
+     "It's a sealed high-barrier pack, so the produce, which keeps breathing after harvest, would run out of oxygen."
     ]
    },
    {
@@ -505,7 +505,7 @@
     "structureId": "HDPE_MONO",
     "stage": "hard-constraint",
     "reasons": [
-     "A sealed high-barrier laminate would starve respiring produce of oxygen (no gas-exchange path)."
+     "It's a sealed high-barrier pack, so the produce, which keeps breathing after harvest, would run out of oxygen."
     ]
    },
    {
@@ -513,7 +513,7 @@
     "structureId": "LDPE_MONO",
     "stage": "hard-constraint",
     "reasons": [
-     "A sealed high-barrier laminate would starve respiring produce of oxygen (no gas-exchange path)."
+     "It's a sealed high-barrier pack, so the produce, which keeps breathing after harvest, would run out of oxygen."
     ]
    },
    {
@@ -521,7 +521,7 @@
     "structureId": "MONO_PE",
     "stage": "hard-constraint",
     "reasons": [
-     "A sealed high-barrier laminate would starve respiring produce of oxygen (no gas-exchange path)."
+     "It's a sealed high-barrier pack, so the produce, which keeps breathing after harvest, would run out of oxygen."
     ]
    },
    {
@@ -529,7 +529,7 @@
     "structureId": "MONO_PE_EVOH",
     "stage": "hard-constraint",
     "reasons": [
-     "A sealed high-barrier laminate would starve respiring produce of oxygen (no gas-exchange path)."
+     "It's a sealed high-barrier pack, so the produce, which keeps breathing after harvest, would run out of oxygen."
     ]
    },
    {
@@ -537,7 +537,7 @@
     "structureId": "MONO_PP",
     "stage": "hard-constraint",
     "reasons": [
-     "A sealed high-barrier laminate would starve respiring produce of oxygen (no gas-exchange path)."
+     "It's a sealed high-barrier pack, so the produce, which keeps breathing after harvest, would run out of oxygen."
     ]
    },
    {
@@ -545,7 +545,7 @@
     "structureId": "OPP_METOPP",
     "stage": "hard-constraint",
     "reasons": [
-     "A sealed high-barrier laminate would starve respiring produce of oxygen (no gas-exchange path)."
+     "It's a sealed high-barrier pack, so the produce, which keeps breathing after harvest, would run out of oxygen."
     ]
    },
    {
@@ -553,8 +553,8 @@
     "structureId": "PET_AL_CPP",
     "stage": "hard-constraint",
     "reasons": [
-     "A sealed high-barrier laminate would starve respiring produce of oxygen (no gas-exchange path).",
-     "Flex-crack risk: up to 120 Gelbo pinholes, above the 60 limit for medium transport stress."
+     "It's a sealed high-barrier pack, so the produce, which keeps breathing after harvest, would run out of oxygen.",
+     "It's likely to crack when flexed in transport: up to 120 pinholes in a Gelbo flex test, more than the 60 allowed for medium transport stress."
     ]
    },
    {
@@ -562,8 +562,8 @@
     "structureId": "PET_AL_MLLDPE",
     "stage": "hard-constraint",
     "reasons": [
-     "A sealed high-barrier laminate would starve respiring produce of oxygen (no gas-exchange path).",
-     "Flex-crack risk: up to 120 Gelbo pinholes, above the 60 limit for medium transport stress."
+     "It's a sealed high-barrier pack, so the produce, which keeps breathing after harvest, would run out of oxygen.",
+     "It's likely to crack when flexed in transport: up to 120 pinholes in a Gelbo flex test, more than the 60 allowed for medium transport stress."
     ]
    },
    {
@@ -571,7 +571,7 @@
     "structureId": "PET_EVOH",
     "stage": "hard-constraint",
     "reasons": [
-     "A sealed high-barrier laminate would starve respiring produce of oxygen (no gas-exchange path)."
+     "It's a sealed high-barrier pack, so the produce, which keeps breathing after harvest, would run out of oxygen."
     ]
    },
    {
@@ -579,7 +579,7 @@
     "structureId": "PET_LDPE",
     "stage": "hard-constraint",
     "reasons": [
-     "A sealed high-barrier laminate would starve respiring produce of oxygen (no gas-exchange path)."
+     "It's a sealed high-barrier pack, so the produce, which keeps breathing after harvest, would run out of oxygen."
     ]
    },
    {
@@ -587,7 +587,7 @@
     "structureId": "PET_METPET_IONOMER",
     "stage": "hard-constraint",
     "reasons": [
-     "A sealed high-barrier laminate would starve respiring produce of oxygen (no gas-exchange path)."
+     "It's a sealed high-barrier pack, so the produce, which keeps breathing after harvest, would run out of oxygen."
     ]
    },
    {
@@ -595,7 +595,7 @@
     "structureId": "PET_METPET_LDPE",
     "stage": "hard-constraint",
     "reasons": [
-     "A sealed high-barrier laminate would starve respiring produce of oxygen (no gas-exchange path)."
+     "It's a sealed high-barrier pack, so the produce, which keeps breathing after harvest, would run out of oxygen."
     ]
    },
    {
@@ -603,7 +603,7 @@
     "structureId": "PET_METPET_MLLDPE",
     "stage": "hard-constraint",
     "reasons": [
-     "A sealed high-barrier laminate would starve respiring produce of oxygen (no gas-exchange path)."
+     "It's a sealed high-barrier pack, so the produce, which keeps breathing after harvest, would run out of oxygen."
     ]
    },
    {
@@ -611,7 +611,7 @@
     "structureId": "PLA_PBS",
     "stage": "hard-constraint",
     "reasons": [
-     "A sealed high-barrier laminate would starve respiring produce of oxygen (no gas-exchange path)."
+     "It's a sealed high-barrier pack, so the produce, which keeps breathing after harvest, would run out of oxygen."
     ]
    }
   ],
@@ -1218,7 +1218,7 @@
     "structureId": "LDPE_MONO",
     "stage": "hard-constraint",
     "reasons": [
-     "Standard LDPE sealant can't seal through oil or moisture on the seal jaws; an mLLDPE or ionomer sealant is needed (Blueprint Challenge 2)."
+     "Its plain LDPE seal layer can't seal through oil or moisture left on the seal area; this food needs an mLLDPE or ionomer seal layer."
     ]
    },
    {
@@ -1226,8 +1226,8 @@
     "structureId": "MACRO_LDPE",
     "stage": "hard-constraint",
     "reasons": [
-     "A breathable produce film gives no moisture or oxygen barrier for a non-respiring food.",
-     "Standard LDPE sealant can't seal through oil or moisture on the seal jaws; an mLLDPE or ionomer sealant is needed (Blueprint Challenge 2)."
+     "It's a breathable produce film, which gives a food that doesn't breathe no protection from moisture or oxygen.",
+     "Its plain LDPE seal layer can't seal through oil or moisture left on the seal area; this food needs an mLLDPE or ionomer seal layer."
     ]
    },
    {
@@ -1235,7 +1235,7 @@
     "structureId": "MP_ANTIFOG_BOPP",
     "stage": "hard-constraint",
     "reasons": [
-     "A breathable produce film gives no moisture or oxygen barrier for a non-respiring food."
+     "It's a breathable produce film, which gives a food that doesn't breathe no protection from moisture or oxygen."
     ]
    },
    {
@@ -1243,7 +1243,7 @@
     "structureId": "MP_ANTIFOG_LDPE",
     "stage": "hard-constraint",
     "reasons": [
-     "A breathable produce film gives no moisture or oxygen barrier for a non-respiring food."
+     "It's a breathable produce film, which gives a food that doesn't breathe no protection from moisture or oxygen."
     ]
    },
    {
@@ -1251,7 +1251,7 @@
     "structureId": "MP_PBS_PHA",
     "stage": "hard-constraint",
     "reasons": [
-     "A breathable produce film gives no moisture or oxygen barrier for a non-respiring food."
+     "It's a breathable produce film, which gives a food that doesn't breathe no protection from moisture or oxygen."
     ]
    },
    {
@@ -1259,7 +1259,7 @@
     "structureId": "MP_PLA",
     "stage": "hard-constraint",
     "reasons": [
-     "A breathable produce film gives no moisture or oxygen barrier for a non-respiring food."
+     "It's a breathable produce film, which gives a food that doesn't breathe no protection from moisture or oxygen."
     ]
    },
    {
@@ -1267,7 +1267,7 @@
     "structureId": "OPP_METOPP",
     "stage": "hard-constraint",
     "reasons": [
-     "Flex-crack risk: up to 25 Gelbo pinholes, above the 20 limit for high transport stress."
+     "It's likely to crack when flexed in transport: up to 25 pinholes in a Gelbo flex test, more than the 20 allowed for high transport stress."
     ]
    },
    {
@@ -1275,7 +1275,7 @@
     "structureId": "PET_AL_CPP",
     "stage": "hard-constraint",
     "reasons": [
-     "Flex-crack risk: up to 120 Gelbo pinholes, above the 20 limit for high transport stress."
+     "It's likely to crack when flexed in transport: up to 120 pinholes in a Gelbo flex test, more than the 20 allowed for high transport stress."
     ]
    },
    {
@@ -1283,7 +1283,7 @@
     "structureId": "PET_AL_MLLDPE",
     "stage": "hard-constraint",
     "reasons": [
-     "Flex-crack risk: up to 120 Gelbo pinholes, above the 20 limit for high transport stress."
+     "It's likely to crack when flexed in transport: up to 120 pinholes in a Gelbo flex test, more than the 20 allowed for high transport stress."
     ]
    },
    {
@@ -1291,7 +1291,7 @@
     "structureId": "PET_LDPE",
     "stage": "hard-constraint",
     "reasons": [
-     "Standard LDPE sealant can't seal through oil or moisture on the seal jaws; an mLLDPE or ionomer sealant is needed (Blueprint Challenge 2)."
+     "Its plain LDPE seal layer can't seal through oil or moisture left on the seal area; this food needs an mLLDPE or ionomer seal layer."
     ]
    },
    {
@@ -1299,7 +1299,7 @@
     "structureId": "PET_METPET_IONOMER",
     "stage": "hard-constraint",
     "reasons": [
-     "Flex-crack risk: up to 35 Gelbo pinholes, above the 20 limit for high transport stress."
+     "It's likely to crack when flexed in transport: up to 35 pinholes in a Gelbo flex test, more than the 20 allowed for high transport stress."
     ]
    },
    {
@@ -1307,8 +1307,8 @@
     "structureId": "PET_METPET_LDPE",
     "stage": "hard-constraint",
     "reasons": [
-     "Standard LDPE sealant can't seal through oil or moisture on the seal jaws; an mLLDPE or ionomer sealant is needed (Blueprint Challenge 2).",
-     "Flex-crack risk: up to 35 Gelbo pinholes, above the 20 limit for high transport stress."
+     "Its plain LDPE seal layer can't seal through oil or moisture left on the seal area; this food needs an mLLDPE or ionomer seal layer.",
+     "It's likely to crack when flexed in transport: up to 35 pinholes in a Gelbo flex test, more than the 20 allowed for high transport stress."
     ]
    },
    {
@@ -1316,7 +1316,7 @@
     "structureId": "PET_METPET_MLLDPE",
     "stage": "hard-constraint",
     "reasons": [
-     "Flex-crack risk: up to 35 Gelbo pinholes, above the 20 limit for high transport stress."
+     "It's likely to crack when flexed in transport: up to 35 pinholes in a Gelbo flex test, more than the 20 allowed for high transport stress."
     ]
    },
    {
@@ -1324,7 +1324,7 @@
     "structureId": "PLAIN_ANTIFOG_BOPP",
     "stage": "hard-constraint",
     "reasons": [
-     "A breathable produce film gives no moisture or oxygen barrier for a non-respiring food."
+     "It's a breathable produce film, which gives a food that doesn't breathe no protection from moisture or oxygen."
     ]
    },
    {
@@ -1332,8 +1332,8 @@
     "structureId": "PLAIN_LDPE",
     "stage": "hard-constraint",
     "reasons": [
-     "A breathable produce film gives no moisture or oxygen barrier for a non-respiring food.",
-     "Standard LDPE sealant can't seal through oil or moisture on the seal jaws; an mLLDPE or ionomer sealant is needed (Blueprint Challenge 2)."
+     "It's a breathable produce film, which gives a food that doesn't breathe no protection from moisture or oxygen.",
+     "Its plain LDPE seal layer can't seal through oil or moisture left on the seal area; this food needs an mLLDPE or ionomer seal layer."
     ]
    }
   ],
@@ -1889,7 +1889,7 @@
     "structureId": "LDPE_MONO",
     "stage": "hard-constraint",
     "reasons": [
-     "Standard LDPE sealant can't seal through oil or moisture on the seal jaws; an mLLDPE or ionomer sealant is needed (Blueprint Challenge 2)."
+     "Its plain LDPE seal layer can't seal through oil or moisture left on the seal area; this food needs an mLLDPE or ionomer seal layer."
     ]
    },
    {
@@ -1897,8 +1897,8 @@
     "structureId": "MACRO_LDPE",
     "stage": "hard-constraint",
     "reasons": [
-     "A breathable produce film gives no moisture or oxygen barrier for a non-respiring food.",
-     "Standard LDPE sealant can't seal through oil or moisture on the seal jaws; an mLLDPE or ionomer sealant is needed (Blueprint Challenge 2)."
+     "It's a breathable produce film, which gives a food that doesn't breathe no protection from moisture or oxygen.",
+     "Its plain LDPE seal layer can't seal through oil or moisture left on the seal area; this food needs an mLLDPE or ionomer seal layer."
     ]
    },
    {
@@ -1906,7 +1906,7 @@
     "structureId": "MP_ANTIFOG_BOPP",
     "stage": "hard-constraint",
     "reasons": [
-     "A breathable produce film gives no moisture or oxygen barrier for a non-respiring food."
+     "It's a breathable produce film, which gives a food that doesn't breathe no protection from moisture or oxygen."
     ]
    },
    {
@@ -1914,7 +1914,7 @@
     "structureId": "MP_ANTIFOG_LDPE",
     "stage": "hard-constraint",
     "reasons": [
-     "A breathable produce film gives no moisture or oxygen barrier for a non-respiring food."
+     "It's a breathable produce film, which gives a food that doesn't breathe no protection from moisture or oxygen."
     ]
    },
    {
@@ -1922,7 +1922,7 @@
     "structureId": "MP_PBS_PHA",
     "stage": "hard-constraint",
     "reasons": [
-     "A breathable produce film gives no moisture or oxygen barrier for a non-respiring food."
+     "It's a breathable produce film, which gives a food that doesn't breathe no protection from moisture or oxygen."
     ]
    },
    {
@@ -1930,7 +1930,7 @@
     "structureId": "MP_PLA",
     "stage": "hard-constraint",
     "reasons": [
-     "A breathable produce film gives no moisture or oxygen barrier for a non-respiring food."
+     "It's a breathable produce film, which gives a food that doesn't breathe no protection from moisture or oxygen."
     ]
    },
    {
@@ -1938,7 +1938,7 @@
     "structureId": "PET_AL_CPP",
     "stage": "hard-constraint",
     "reasons": [
-     "Flex-crack risk: up to 120 Gelbo pinholes, above the 60 limit for medium transport stress."
+     "It's likely to crack when flexed in transport: up to 120 pinholes in a Gelbo flex test, more than the 60 allowed for medium transport stress."
     ]
    },
    {
@@ -1946,7 +1946,7 @@
     "structureId": "PET_AL_MLLDPE",
     "stage": "hard-constraint",
     "reasons": [
-     "Flex-crack risk: up to 120 Gelbo pinholes, above the 60 limit for medium transport stress."
+     "It's likely to crack when flexed in transport: up to 120 pinholes in a Gelbo flex test, more than the 60 allowed for medium transport stress."
     ]
    },
    {
@@ -1954,7 +1954,7 @@
     "structureId": "PET_LDPE",
     "stage": "hard-constraint",
     "reasons": [
-     "Standard LDPE sealant can't seal through oil or moisture on the seal jaws; an mLLDPE or ionomer sealant is needed (Blueprint Challenge 2)."
+     "Its plain LDPE seal layer can't seal through oil or moisture left on the seal area; this food needs an mLLDPE or ionomer seal layer."
     ]
    },
    {
@@ -1962,7 +1962,7 @@
     "structureId": "PET_METPET_LDPE",
     "stage": "hard-constraint",
     "reasons": [
-     "Standard LDPE sealant can't seal through oil or moisture on the seal jaws; an mLLDPE or ionomer sealant is needed (Blueprint Challenge 2)."
+     "Its plain LDPE seal layer can't seal through oil or moisture left on the seal area; this food needs an mLLDPE or ionomer seal layer."
     ]
    },
    {
@@ -1970,7 +1970,7 @@
     "structureId": "PLAIN_ANTIFOG_BOPP",
     "stage": "hard-constraint",
     "reasons": [
-     "A breathable produce film gives no moisture or oxygen barrier for a non-respiring food."
+     "It's a breathable produce film, which gives a food that doesn't breathe no protection from moisture or oxygen."
     ]
    },
    {
@@ -1978,8 +1978,8 @@
     "structureId": "PLAIN_LDPE",
     "stage": "hard-constraint",
     "reasons": [
-     "A breathable produce film gives no moisture or oxygen barrier for a non-respiring food.",
-     "Standard LDPE sealant can't seal through oil or moisture on the seal jaws; an mLLDPE or ionomer sealant is needed (Blueprint Challenge 2)."
+     "It's a breathable produce film, which gives a food that doesn't breathe no protection from moisture or oxygen.",
+     "Its plain LDPE seal layer can't seal through oil or moisture left on the seal area; this food needs an mLLDPE or ionomer seal layer."
     ]
    },
    {

@@ -20,6 +20,8 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import KeepTogether, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
+from .engine.gatekeeper import describe
+
 # Regular/bold pairs, best glyph coverage first. ReportLab's bundled Vera is always present.
 _VERA = Path(reportlab.__file__).resolve().parent / "fonts"
 FONT_CANDIDATES = [
@@ -156,7 +158,9 @@ def _days(d) -> str:
 
 
 class Report:
-    def __init__(self, analysis_id: str, request: dict, result: dict, created_at: datetime | None):
+    def __init__(self, analysis_id: str, request: dict, result: dict, created_at: datetime | None,
+                 material_names: dict[str, str] | None = None):
+        self.material_names = material_names or {}
         self.id = analysis_id
         self.req = request or {}
         self.res = result or {}
@@ -416,7 +420,7 @@ class Report:
         prio = inputs.get("priorities") or {}
         if prio:
             text = ", ".join(f"{PRIORITY_LABELS.get(k, k)} {round(v * 100)}%" for k, v in prio.items() if isinstance(v, (int, float)))
-            hard = inputs.get("hardConstraints") or []
+            hard = [describe(c, self.material_names) for c in inputs.get("hardConstraints") or []]
             self.story += [Spacer(1, 4), self.p(f"<b>Priorities:</b> {clean(text)}" +
                                                 (f" · <b>Hard constraints:</b> {clean(', '.join(hard))}" if hard else ""),
                                                 "small", raw=True)]
@@ -473,5 +477,6 @@ class Report:
         return buf.getvalue()
 
 
-def render_pdf(analysis_id: str, request: dict, result: dict, created_at: datetime | None = None) -> bytes:
-    return Report(analysis_id, request, result, created_at).build()
+def render_pdf(analysis_id: str, request: dict, result: dict, created_at: datetime | None = None,
+               material_names: dict[str, str] | None = None) -> bytes:
+    return Report(analysis_id, request, result, created_at, material_names).build()

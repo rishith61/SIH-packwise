@@ -23,3 +23,10 @@ def test_render_with_builtin_font_and_sparse_result(monkeypatch):
 
 def test_render_empty_result():
     assert render_pdf("an_empty", {}, {}).startswith(b"%PDF")
+
+
+def test_constraints_are_described_in_words():
+    from app.engine.gatekeeper import describe
+    assert describe("max_cost_band:low") == "Low cost band at most"
+    assert describe("exclude_material:AL_FOIL", {"AL_FOIL": "Aluminium foil"}) == "No Aluminium foil"
+    assert describe("max_gauge_um:80") == "At most 80 µm thick"

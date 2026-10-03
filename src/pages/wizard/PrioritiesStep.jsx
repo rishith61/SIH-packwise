@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useWizard } from '../../context/WizardContext';
-import { CONSTRAINT_SUGGESTIONS, PRIORITY_FIELDS } from '../../data/wizard';
+import { CONSTRAINT_SUGGESTIONS, PRIORITY_FIELDS, constraintLabel, excludeMaterial, maxGauge } from '../../data/wizard';
+import { listMaterials } from '../../services/api';
 import { useFocusOnMount } from '../../hooks/useFocusOnMount';
+import { useQuery } from '../../hooks/useQuery';
 import Button from '../../components/Button';
 import TagChip from '../../components/TagChip';
 import LockIcon from '../../components/icons/LockIcon';
@@ -18,7 +20,10 @@ export default function PrioritiesStep() {
   const { state, dispatch, runAnalysis } = useWizard();
   const navigate = useNavigate();
   const headingRef = useFocusOnMount();
-  const [custom, setCustom] = useState('');
+  const [material, setMaterial] = useState('');
+  const [gauge, setGauge] = useState('');
+  const materials = useQuery((signal) => listMaterials({}, { signal }), 'materials').data?.results || [];
+  const materialNames = Object.fromEntries(materials.map((m) => [m.materialId, m.name]));
 
   const p = state.priorities;
   const total = PRIORITY_FIELDS.reduce((sum, f) => sum + p[f.key], 0);
@@ -30,12 +35,11 @@ export default function PrioritiesStep() {
     dispatch({ type: constraints.includes(value) ? 'constraints/remove' : 'constraints/add', value });
   }
 
-  function addCustom(e) {
-    e.preventDefault();
-    if (!custom.trim()) return;
-    dispatch({ type: 'constraints/add', value: custom });
-    setCustom('');
+  function add(value) {
+    dispatch({ type: 'constraints/add', value });
   }
+
+  const gaugeOk = Number(gauge) > 0 && Number(gauge) <= 1000;
 
   function analyze() {
     runAnalysis();
@@ -127,31 +131,35 @@ export default function PrioritiesStep() {
           ))}
         </div>
 
-        <form className={own.addRow} onSubmit={addCustom}>
-          <label htmlFor="constraint-custom" className="sr-only">Custom constraint</label>
-          <input
-            id="constraint-custom"
-            className={fieldStyles.input}
-            type="text"
-            placeholder="Custom constraint, e.g. exclude_material:AL_FOIL or max_gauge_um:80"
-            value={custom}
-            onChange={(e) => setCustom(e.target.value)}
-          />
-          <Button type="submit" variant="ghost" disabled={!custom.trim()}>Add</Button>
-        </form>
+        <div className={own.addRows}>
+          <form className={own.addRow} onSubmit={(e) => { e.preventDefault(); if (material) { add(excludeMaterial(material)); setMaterial(''); } }}>
+            <label htmlFor="constraint-material" className={own.addLabel}>Exclude a material</label>
+            <select id="constraint-material" className={fieldStyles.input} value={material} onChange={(e) => setMaterial(e.target.value)}>
+              <option value="">Choose a material…</option>
+              {materials.map((m) => <option key={m.materialId} value={m.materialId}>{m.name}</option>)}
+            </select>
+            <Button type="submit" variant="ghost" disabled={!material}>Exclude</Button>
+          </form>
+          <form className={own.addRow} onSubmit={(e) => { e.preventDefault(); if (gaugeOk) { add(maxGauge(Number(gauge))); setGauge(''); } }}>
+            <label htmlFor="constraint-gauge" className={own.addLabel}>Maximum thickness (µm)</label>
+            <input id="constraint-gauge" className={fieldStyles.input} type="number" inputMode="numeric" min="1" max="1000" step="1"
+              placeholder="e.g. 80" value={gauge} onChange={(e) => setGauge(e.target.value)} />
+            <Button type="submit" variant="ghost" disabled={!gaugeOk}>Set limit</Button>
+          </form>
+        </div>
 
         {extraConstraints.length > 0 && (
-          <ul className={own.extra} aria-label="Custom constraints">
-            {extraConstraints.map((c) => (
-              <li key={c}>
-                <code>{c}</code>
-                <button type="button" className={own.remove} onClick={() => dispatch({ type: 'constraints/remove', value: c })} aria-label={`Remove ${c}`}>×</button>
-              </li>
-            ))}
+          <ul className={own.extra} aria-label="Your other constraints">
+            {extraConstraints.map((c) => {
+              const text = constraintLabel(c, materialNames);
+              return (
+                <li key={c}>
+                  {text}
+                  <button type="button" className={own.remove} onClick={() => dispatch({ type: 'constraints/remove', value: c })} aria-label={`Remove: ${text}`}>×</button>
+                </li>
+              );
+            })}
           </ul>
-        )}
-        {constraints.length > 0 && (
-          <p className={own.sent}>Sent as: {constraints.map((c) => <code key={c}>{c}</code>)}</p>
         )}
       </section>
 

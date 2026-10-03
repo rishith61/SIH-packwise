@@ -19,17 +19,16 @@
 
 .optional { color: var(--muted); font-weight: 400; font-size: 15px; }
 .chips { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
-.addRow { display: flex; gap: var(--sp-2); margin-top: var(--sp-4); max-width: 560px; }
+.addRows { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--sp-4); margin-top: var(--sp-5); }
+.addRow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--sp-2); align-items: end; }
+.addLabel { grid-column: 1 / -1; font-size: 14px; font-weight: 500; }
 .extra { list-style: none; margin: var(--sp-3) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--sp-2); }
 .extra li {
   display: inline-flex; align-items: center; gap: 4px; padding: 0 4px 0 12px; min-height: 34px;
   border-radius: 999px; background: var(--accent-tint); border: 1px solid var(--accent);
 }
-.extra code, .sent code { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: 13px; }
 .remove {
   width: 26px; height: 26px; border-radius: 50%; border: 0; background: transparent; cursor: pointer;
   color: var(--muted); font-size: 18px; line-height: 1;
 }
 .remove:hover { background: var(--surface-2); color: var(--text); }
-.sent { margin-top: var(--sp-4); font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-.sent code { padding: 1px 6px; border-radius: 4px; background: var(--surface-2); color: var(--text); }

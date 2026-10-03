@@ -3,7 +3,7 @@
  * only. Nothing here derives requirements or recommendations; that's the
  * backend's job (build spec §10).
  */
-import { CONDITION_FIELDS, PROFILE_FIELDS } from '../data/wizard';
+import { CONDITION_FIELDS, EXCLUSIVE_CONSTRAINT_PREFIXES, PROFILE_FIELDS } from '../data/wizard';
 import { storageErrors } from './storage';
 
 export const PROFILE_KEYS = ['category', 'moisturePct', 'fatPct', 'ph', 'respirationClass', 'oxidationSensitivity'];
@@ -192,9 +192,11 @@ export function reducer(state, action) {
     case 'constraints/add': {
       const value = action.value.trim();
       if (!value || state.priorities.hardConstraints.includes(value)) return state;
+      const prefix = EXCLUSIVE_CONSTRAINT_PREFIXES.find((pre) => value.startsWith(pre));
+      const kept = prefix ? state.priorities.hardConstraints.filter((c) => !c.startsWith(prefix)) : state.priorities.hardConstraints;
       return {
         ...state,
-        priorities: { ...state.priorities, hardConstraints: [...state.priorities.hardConstraints, value] },
+        priorities: { ...state.priorities, hardConstraints: [...kept, value] },
         analysis: resetAnalysisStatus(state.analysis),
       };
     }
