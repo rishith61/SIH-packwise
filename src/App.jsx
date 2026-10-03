@@ -12,6 +12,11 @@ import PrioritiesStep from './pages/wizard/PrioritiesStep';
 import RunningStep from './pages/wizard/RunningStep';
 import ResultPage from './pages/wizard/ResultPage';
 import ReportPage from './pages/wizard/ReportPage';
+import ToolLayout from './pages/tools/ToolLayout';
+import BuilderPage from './pages/tools/BuilderPage';
+import WhatIfPage from './pages/tools/WhatIfPage';
+import MaterialsPage from './pages/tools/MaterialsPage';
+import MaterialDetailPage from './pages/tools/MaterialDetailPage';
 
 export default function App() {
   return (
@@ -31,6 +36,12 @@ export default function App() {
               <Route path="running" element={<RunningStep />} />
               <Route path="result" element={<ResultPage />} />
               <Route path="report" element={<ReportPage />} />
+            </Route>
+            <Route element={<ToolLayout />}>
+              <Route path="/builder" element={<BuilderPage />} />
+              <Route path="/what-if" element={<WhatIfPage />} />
+              <Route path="/materials" element={<MaterialsPage />} />
+              <Route path="/materials/:materialId" element={<MaterialDetailPage />} />
             </Route>
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

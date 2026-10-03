@@ -1,3 +1,4 @@
+import { days, inr, num } from '../../utils/format';
 import ProvenanceBadge from './ProvenanceBadge';
 import StatusPill from './StatusPill';
 import styles from './Result.module.css';
@@ -14,6 +15,12 @@ export default function ComparisonTable({ primary, alternatives }) {
     for (const r of col.requirements || []) if (!labels.includes(r.label)) labels.push(r.label);
   }
   const find = (col, label) => (col.requirements || []).find((r) => r.label === label);
+  const figureRows = [
+    ['Estimated shelf life', (c) => days(c.shelfLife?.estimateDays)],
+    ['Packaging cost', (c) => inr(c.costAndImpact?.inrPerPack)],
+    ['Carbon footprint', (c) => num(c.costAndImpact?.gCo2ePerPack, 'g CO₂e')],
+    ['Recyclability index', (c) => num(c.costAndImpact?.recyclabilityIndex)],
+  ].filter(([, get]) => columns.some((c) => get(c)));
 
   return (
     <div className={styles.tableWrap}>
@@ -51,6 +58,12 @@ export default function ComparisonTable({ primary, alternatives }) {
                   </td>
                 );
               })}
+            </tr>
+          ))}
+          {figureRows.map(([label, get]) => (
+            <tr key={label}>
+              <th scope="row">{label}</th>
+              {columns.map((col, i) => <td key={i}>{get(col) ?? <span className={styles.na}>Not reported</span>}</td>)}
             </tr>
           ))}
           <tr>

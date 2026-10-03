@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import Pipeline from '../components/Pipeline';
 import CustomPackaging from '../components/CustomPackaging';
+import ToolsSection from '../components/ToolsSection';
 import Footer from '../components/Footer';
 
 export default function LandingPage() {
@@ -15,6 +16,7 @@ export default function LandingPage() {
         <Hero />
         <Pipeline />
         <CustomPackaging />
+        <ToolsSection />
       </main>
       <Footer />
     </UnpackProvider>

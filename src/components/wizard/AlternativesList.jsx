@@ -1,4 +1,5 @@
 import Button from '../Button';
+import AltFacts from './AltFacts';
 import styles from './Result.module.css';
 
 export default function AlternativesList({ items, onCompare }) {
@@ -10,7 +11,9 @@ export default function AlternativesList({ items, onCompare }) {
         <ul className={styles.alts}>
           {items.map((alt, i) => (
             <li key={alt.structure + i} className={styles.alt}>
+              {alt.profile && <span className={styles.colTag} data-alt>{alt.profile}</span>}
               <h3 className={styles.altTitle}>{alt.structure}</h3>
+              <AltFacts shelfLife={alt.shelfLife} costAndImpact={alt.costAndImpact} />
               <p className={styles.altText}>{alt.tradeoffSummary}</p>
               {onCompare && (
                 <Button variant="ghost" size="sm" className={styles.altBtn} onClick={() => onCompare(i)}>

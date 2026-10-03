@@ -1,6 +1,6 @@
 /*
  * PackWise API client (build spec §7). Every screen talks to the backend
- * through these four functions only.
+ * through the functions below only.
  *
  * With VITE_API_BASE_URL unset the calls are served by src/mocks instead, so
  * the wizard can be built and demoed before the backend exists. Switching to
@@ -75,4 +75,38 @@ export async function fetchReportPdf(analysisId) {
   if (USING_MOCKS) throw new ApiError({ code: 'NOT_AVAILABLE', message: 'PDF export needs the backend.' });
   const res = await request('/api/report/' + encodeURIComponent(analysisId) + '?format=pdf', { raw: true });
   return res.blob();
+}
+
+/** GET /api/materials → { results: [material], families: [string] } (Material Explorer). */
+export function listMaterials({ q = '', family = '', compostable = false, sort = 'name' } = {}, { signal } = {}) {
+  if (USING_MOCKS) return mock.listMaterials({ q, family, compostable, sort }, { signal });
+  const params = new URLSearchParams({ sort });
+  if (q.trim()) params.set('q', q.trim());
+  if (family) params.set('family', family);
+  if (compostable) params.set('compostable', 'true');
+  return request('/api/materials?' + params, { signal });
+}
+
+/** GET /api/materials/{id} → material with usedInStructures and similar materials. */
+export function getMaterial(materialId, { signal } = {}) {
+  if (USING_MOCKS) return mock.getMaterial(materialId, { signal });
+  return request('/api/materials/' + encodeURIComponent(materialId), { signal });
+}
+
+/** GET /api/structures → { results: [structure] } (library structures with layers and metrics). */
+export function listStructures({ signal } = {}) {
+  if (USING_MOCKS) return mock.listStructures({ signal });
+  return request('/api/structures', { signal });
+}
+
+/** POST /api/evaluate { scenario, structure } → indicators, requirements, violations, specifications (Package Builder). */
+export function evaluate(payload, { signal } = {}) {
+  if (USING_MOCKS) return mock.evaluate(payload, { signal });
+  return request('/api/evaluate', { method: 'POST', body: payload, signal });
+}
+
+/** POST /api/what-if { baseline, variant } → before, after, changes[, variantRecommendation] (What-If simulator). */
+export function whatIf(payload, { signal } = {}) {
+  if (USING_MOCKS) return mock.whatIf(payload, { signal });
+  return request('/api/what-if', { method: 'POST', body: payload, signal });
 }

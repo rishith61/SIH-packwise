@@ -11,3 +11,8 @@
 .logo svg { width: 24px; height: 24px; color: var(--accent); }
 .actions { display: flex; align-items: center; gap: var(--sp-2); }
 @media (max-width: 420px) { .actions .signin { display: none; } }
+.links { display: flex; align-items: center; gap: var(--sp-1); margin-right: auto; margin-left: var(--sp-5); }
+.link { padding: 6px var(--sp-3); border-radius: 999px; font-size: 14px; color: var(--muted); text-decoration: none; }
+.link:hover { color: var(--text); background: var(--surface-2); }
+.link[aria-current="page"] { color: var(--text); background: var(--accent-tint); }
+@media (max-width: 760px) { .links { display: none; } }

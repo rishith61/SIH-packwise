@@ -133,7 +133,7 @@ export default function PrioritiesStep() {
             id="constraint-custom"
             className={fieldStyles.input}
             type="text"
-            placeholder="Custom constraint, e.g. food_contact_grade:true"
+            placeholder="Custom constraint, e.g. exclude_material:AL_FOIL or max_gauge_um:80"
             value={custom}
             onChange={(e) => setCustom(e.target.value)}
           />

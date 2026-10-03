@@ -12,6 +12,8 @@ import own from './RunningStep.module.css';
 
 const STAGE_MS = 650;
 const FINISH_MS = 160;
+// Slower when the backend reports what each stage found, so the details can be read.
+const TRACE_MS = 420;
 
 function fieldLabel(path) {
   const key = path.split('.').pop();
@@ -19,9 +21,10 @@ function fieldLabel(path) {
 }
 
 /**
- * Screen 5. The stages are client-side choreography over a single request
- * (spec §6.5): they advance on a timer, hold on the last one until the
- * response arrives, then finish.
+ * Screen 5. The analysis is a single fast request (spec §6.5, §7.5): the
+ * stages advance on a timer and hold on the last one until the response
+ * arrives. Then each stage completes in turn showing what the backend's
+ * trace says it found.
  */
 export default function RunningStep() {
   const { state, runAnalysis } = useWizard();
@@ -30,6 +33,7 @@ export default function RunningStep() {
   const headingRef = useFocusOnMount();
   const { status, error, result } = state.analysis;
   const [done, setDone] = useState(0); // number of completed stages
+  const trace = status === 'success' ? result?.trace : null;
 
   useEffect(() => {
     if (status === 'running') setDone(0);
@@ -42,17 +46,17 @@ export default function RunningStep() {
     }
     if (status === 'success') {
       if (done < ANALYSIS_STAGES.length) {
-        const t = setTimeout(() => setDone((d) => d + 1), FINISH_MS);
+        const t = setTimeout(() => setDone((d) => d + 1), trace ? TRACE_MS : FINISH_MS);
         return () => clearTimeout(t);
       }
       const t = setTimeout(() => {
         announce('Analysis complete.');
         navigate('/analyze/result', { replace: true });
-      }, 350);
+      }, trace ? 900 : 350);
       return () => clearTimeout(t);
     }
     return undefined;
-  }, [status, done, navigate, announce]);
+  }, [status, done, navigate, announce, trace]);
 
   useEffect(() => {
     if (status === 'error') announce('The analysis did not complete.');
@@ -99,16 +103,22 @@ export default function RunningStep() {
         <ol className={own.stages} aria-label="Reasoning stages">
           {ANALYSIS_STAGES.map((stage, i) => {
             const s = i < done ? 'done' : i === done ? 'active' : 'pending';
+            const detail = s === 'done' && trace?.find((t) => t.stage === stage.id)?.detail;
             return (
-              <li key={stage} className={own.stage} data-state={s}>
+              <li key={stage.id} className={own.stage} data-state={s}>
                 <span className={own.marker} aria-hidden="true">{s === 'done' ? '✓' : ''}</span>
-                <span>{stage}</span>
-                <span className="sr-only">{s === 'done' ? ' (done)' : s === 'active' ? ' (in progress)' : ''}</span>
+                <span className={own.stageText}>
+                  <span>{stage.label}</span>
+                  <span className="sr-only">{s === 'done' ? ' (done)' : s === 'active' ? ' (in progress)' : ''}</span>
+                  {detail && <span className={own.detail}>{detail}</span>}
+                </span>
               </li>
             );
           })}
         </ol>
-        <p className={own.note}>Stage timing is illustrative. The analysis runs as a single request.</p>
+        <p className={own.note}>
+          {trace ? 'Each line is what that stage of the analysis found.' : 'The analysis runs as a single request; stage timing is illustrative until it returns.'}
+        </p>
       </div>
     </div>
   );

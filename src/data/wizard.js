@@ -100,23 +100,30 @@ export const PRIORITY_FIELDS = [
 ];
 
 /*
- * Suggested hard constraints. The vocabulary is still to be confirmed with the
- * backend, so this list is only a convenience; users can add any string.
+ * Suggested hard constraints, in the backend's vocabulary (engine/gatekeeper.py).
+ * Users can also type exclude_material:<id or family> or max_gauge_um:<n>;
+ * anything unrecognised comes back as a warning on the result.
  */
 export const CONSTRAINT_SUGGESTIONS = [
   { value: 'recyclable:true', label: 'Must be recyclable' },
+  { value: 'mono_material:true', label: 'Mono-material only' },
+  { value: 'compostable:true', label: 'Must be compostable' },
+  { value: 'no_metallised:true', label: 'No metallised layers' },
   { value: 'max_cost_band:low', label: 'Cost band low at most' },
   { value: 'max_cost_band:medium', label: 'Cost band medium at most' },
 ];
 
-/** Cosmetic reasoning stages for the analysis screen (spec §6.5). */
+/**
+ * Reasoning stages for the analysis screen (spec §6.5). Ids match the
+ * backend's result.trace, which says what each stage actually found.
+ */
 export const ANALYSIS_STAGES = [
-  'Reading food profile',
-  'Checking deterioration risks',
-  'Deriving packaging requirements',
-  'Filtering candidate materials',
-  'Scoring & optimizing',
-  'Preparing explanation',
+  { id: 'profile', label: 'Reading food profile' },
+  { id: 'risks', label: 'Checking deterioration risks' },
+  { id: 'requirements', label: 'Deriving packaging requirements' },
+  { id: 'filter', label: 'Filtering candidate materials' },
+  { id: 'score', label: 'Scoring & optimizing' },
+  { id: 'explain', label: 'Preparing explanation' },
 ];
 
 export function optionLabel(options, value) {
