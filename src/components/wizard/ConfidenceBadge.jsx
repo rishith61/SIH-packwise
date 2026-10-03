@@ -8,12 +8,12 @@ const CONFIDENCE = {
 };
 
 /** Overall confidence of a result, exactly as the payload states it. */
-export default function ConfidenceBadge({ value, className }) {
+export default function ConfidenceBadge({ value, className, showKey = true }) {
   if (!value) return null;
   const { label, tone, dashed } = CONFIDENCE[String(value).toLowerCase()] || { label: value, tone: 'neutral' };
   return (
     <span className={cx(styles.badge, dashed && styles.dashed, className)} data-tone={tone}>
-      <span className={styles.key}>Confidence</span>{label}
+      {showKey && <span className={styles.key}>Confidence</span>}{label}
     </span>
   );
 }
