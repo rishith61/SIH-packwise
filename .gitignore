@@ -43,3 +43,14 @@ coverage/
 *.pdf
 *.md
 !README.md
+
+# Python backend
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+backend/*.db
+backend/*.db-journal
+backend/artifacts/
