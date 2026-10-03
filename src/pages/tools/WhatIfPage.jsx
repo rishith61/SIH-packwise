@@ -4,7 +4,7 @@ import { listStructures, searchCommodities, whatIf } from '../../services/api';
 import { useQuery } from '../../hooks/useQuery';
 import { useFocusOnMount } from '../../hooks/useFocusOnMount';
 import { CONDITION_FIELDS } from '../../data/wizard';
-import { FROM_ANALYSIS, initialScenario, scenarioRule, storageProblem, toRequest, wizardScenario } from '../../lib/scenario';
+import { FROM_ANALYSIS, conditionErrors, initialScenario, scenarioRule, storageProblem, toRequest, wizardScenario } from '../../lib/scenario';
 import { useStorageRules } from '../../hooks/useStorageRules';
 import { days, label } from '../../utils/format';
 import Button from '../../components/Button';
@@ -25,14 +25,22 @@ function warmer(c) {
   return { ...c, storageType, temperatureC: clamp(t, 'temperatureC') };
 }
 
-/** Quick changes to try; each starts from the baseline conditions. */
+/** Quick changes to try; each starts from the baseline conditions. The first that applies is shown on load. */
 const PRESETS = [
+  { label: 'Cold chain lost', apply: (c) => ({ ...c, storageType: 'ambient', temperatureC: '30', transportMode: 'ambient_transport' }) },
   { label: 'Warmer storage (+8 °C)', apply: warmer },
   { label: 'Humid air (90 % RH)', apply: (c) => ({ ...c, relativeHumidityPct: '90' }) },
   { label: 'Rough transport', apply: (c) => ({ ...c, transportStress: 'high' }) },
   { label: 'Twice the shelf life', apply: (c) => ({ ...c, targetShelfLifeDays: clamp(Number(c.targetShelfLifeDays) * 2, 'targetShelfLifeDays') }) },
-  { label: 'Cold chain lost', apply: (c) => ({ ...c, storageType: 'ambient', temperatureC: '30', transportMode: 'ambient_transport' }) },
 ];
+
+/** The first preset that changes something and is valid for the food (raw meat can't lose its cold chain, say). */
+function defaultPreset(conditions, rule) {
+  return PRESETS.find((p) => {
+    const next = p.apply(conditions);
+    return JSON.stringify(next) !== JSON.stringify(conditions) && !Object.keys(conditionErrors(next, rule)).length;
+  }) || PRESETS[PRESETS.length - 1];
+}
 
 const DIRECTION = { better: '▲ Better', worse: '▼ Worse', same: '— Same' };
 
@@ -117,21 +125,24 @@ export default function WhatIfPage() {
   const fromAnalysis = useMemo(() => wizardScenario(wizard), [wizard]);
   const [baseline, setBaseline] = useState(() => initialScenario(wizard));
   const [baseStructure, setBaseStructure] = useState(RECOMMENDED);
-  const [variant, setVariant] = useState(() => ({ ...baseline.conditions }));
+  // Until the user changes something themselves, the variant is a default preset, so the first view shows real differences.
+  const [edited, setVariant] = useState(null);
   const [variantStructure, setVariantStructure] = useState('');
 
   const catalog = useQuery((signal) => searchCommodities('', { signal }), 'catalog');
   const structures = useQuery((signal) => listStructures({ signal }), 'structures');
 
+  // Baseline and variant are the same food, so one rule covers both.
+  const rule = scenarioRule(useStorageRules(), baseline);
+  const variant = edited ?? defaultPreset(baseline.conditions, rule).apply(baseline.conditions);
+
   function changeBaseline(next) {
-    // Baseline edits flow into the variant, except for fields the user has already changed there.
+    // Baseline edits flow into the user's own variant, except for fields they changed there.
     const prev = baseline.conditions;
-    setVariant((v) => Object.fromEntries(Object.entries(next.conditions).map(([k, val]) => [k, v[k] === prev[k] ? val : v[k]])));
+    if (edited) setVariant(Object.fromEntries(Object.entries(next.conditions).map(([k, val]) => [k, edited[k] === prev[k] ? val : edited[k]])));
     setBaseline(next);
   }
 
-  // Baseline and variant are the same food, so one rule covers both.
-  const rule = scenarioRule(useStorageRules(), baseline);
   const baseProblem = storageProblem(rule, baseline.conditions);
   const varProblem = storageProblem(rule, variant);
   const baseReq = toRequest(baseline, baseline.conditions, rule);
